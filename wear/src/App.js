@@ -13,7 +13,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username,setUsername]
+  const [username, setUsername] = useState("");
 
   // useEffect to check if a user is already logged in and will
   // auto login for them
@@ -28,11 +28,10 @@ function App() {
       }
     });
 
-    return() =>{
-      unsubscribe()
-    }
-
-  },[user,username]);
+    return () => {
+      unsubscribe();
+    };
+  }, [user, username]);
 
   // login funciton for logining in a user
   const login = (evt) => {
@@ -55,15 +54,25 @@ function App() {
           <Link to="/Home">
             <img className="app__logo" src={logo} />
           </Link>
-
-          <div className="app__authButtons">
-            <Link to="/login">
-              <button className="app__loginButton">Login</button>
-            </Link>
-            <Link to="/signup">
-              <button className="app__singupButton">Signup</button>
-            </Link>
-          </div>
+          {user ? (
+            <Button
+              onClick={() => {
+                auth.signOut();
+                console.log("user signed out");
+              }}
+            >
+              Log out
+            </Button>
+          ) : (
+            <div className="app__authButtons">
+              <Link to="/login">
+                <button className="app__loginButton">Login</button>
+              </Link>
+              <Link to="/signup">
+                <button className="app__singupButton">Signup</button>
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* router with all components in it. */}
@@ -130,6 +139,7 @@ function Signup() {
     console.log("user signup");
     setPassword("");
     setEmail("");
+    setUsername("");
   };
   return (
     <div className="login__conatiner">
