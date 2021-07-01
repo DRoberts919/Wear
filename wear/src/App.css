@@ -1,38 +1,65 @@
-.App {
-  text-align: center;
+/* header css */
+
+.app {
+  height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app__header {
+  object-fit: contain;
+  justify-content: space-between;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: #f9f8f8;
+  border-bottom: 1px solid rgb(7, 6, 6);
+  padding: 20px;
+  /* width: 100%; */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  margin-bottom: 30px;
 }
 
-.App-link {
-  color: #61dafb;
+.app__logo {
+  width: 50px;
+  height: 50px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app__authButtons {
+  margin-right: 30px;
+  justify-content: space-between;
+}
+
+.app__loginButton {
+  border: 1px solid #53dd6c;
+  width: 100px;
+  height: 40px;
+  margin-right: 2px;
+  border-radius: 20px;
+  text-align: center;
+  background-color: none;
+  background: none;
+  font-size: 1.8em;
+  color: #53dd6c;
+}
+
+.app__singupButton {
+  border: 1px solid #53dd6c;
+  width: 100px;
+  height: 40px;
+  margin-left: 2px;
+  border-radius: 20px;
+  text-align: center;
+  background-color: #53dd6c;
+  font-size: 1.8em;
+  color: #fff;
+}
+
+
+/* login component css */
+
+.login__conatiner{
+  width: 600px;
+  height: 500px;
+  margin: 0 auto;
+  background-color: #f9f8f8;
 }
