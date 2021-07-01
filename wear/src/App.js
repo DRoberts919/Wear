@@ -1,20 +1,26 @@
 import "./App.css";
 import logo from "./images/w-logo.png";
 
-import { BrowserRouter as Router, Route, Switch, Link,useHistory } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+  Redirect,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
 import LandingPage from "./components/LandingPage.js";
 import { Input, Button } from "@material-ui/core";
 import { auth, db } from "./firebase.js";
 
-import Signup from './components/Signup.js'
+import Signup from "./components/Signup.js";
 import Login from "./components/Login.js";
 
 // helper fucntions
 
 function App() {
   const [user, setUser] = useState(null);
-  
 
   // useEffect to check if a user is already logged in and will
   // auto login for them
@@ -35,7 +41,6 @@ function App() {
   }, [user]);
 
   // login funciton for logining in a user
-  
 
   return (
     <Router>
@@ -70,15 +75,15 @@ function App() {
         {/* router with all components in it. */}
         <Switch>
           <Route path="/login">
-            <Login/>
+            <Login />
           </Route>
           <Route path="/signup">
             <Signup />
           </Route>
           <Route>{/* route for seeing all posts */}</Route>
-          <Route path="/Home">
-            <LandingPage authorized={user} />
-          </Route>
+          <PrivateRoute user={user} path="/Home">
+            <LandingPage />
+          </PrivateRoute>
         </Switch>
       </div>
     </Router>
@@ -89,8 +94,16 @@ export default App;
 
 // components
 
-
-
+function PrivateRoute({ children, user, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={() => {
+        console.log(user)
+        return user ? children : <Redirect to="/login"></Redirect>;
+      }}
+    />
+  );
+}
 
 // singup component
-

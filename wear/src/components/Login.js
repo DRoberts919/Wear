@@ -2,26 +2,28 @@ import React, { useState } from "react";
 import logo from "../images/w-logo.png";
 import { auth } from "../firebase.js";
 import { Input, Button } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-
-  let history = useHistory();
+  const [redirectToRefferrer, setRedirectToRefferrer] = useState(false);
 
   const login = (evt) => {
     evt.preventDefault();
 
     auth
       .signInWithEmailAndPassword(email, password)
-      .catch((err) => alert(err.message));
-    history.push("/Home");
+      .catch((err) => alert(err.message))
+      .then(setRedirectToRefferrer(true));
 
     setPassword("");
     setEmail("");
   };
+
+  if (redirectToRefferrer === true) {
+    return <Redirect to="/Home" />;
+  }
   return (
     <div className="login__conatiner">
       <img alt="wearLogo" src={logo} className="app__logo" />
