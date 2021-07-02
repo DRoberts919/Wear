@@ -1,5 +1,5 @@
 import React from "react";
-import "./landingpage.css";
+import "../styles/landingpage.css";
 import { Redirect } from "react-router-dom";
 
 const LandingPage = ({ authorized }) => {

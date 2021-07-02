@@ -1,6 +1,5 @@
-import "./App.css";
+import "./styles/App.css";
 import logo from "./images/w-logo.png";
-
 import {
   BrowserRouter as Router,
   Route,
@@ -11,7 +10,7 @@ import {
 } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LandingPage from "./components/LandingPage.js";
-import { Input, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { auth, db } from "./firebase.js";
 
 import Signup from "./components/Signup.js";
@@ -81,7 +80,7 @@ function App() {
             <Signup />
           </Route>
           <Route>{/* route for seeing all posts */}</Route>
-          <PrivateRoute user={user} path="/Home">
+          <PrivateRoute  path="/Home" user={user}>
             <LandingPage />
           </PrivateRoute>
         </Switch>
@@ -99,11 +98,9 @@ function PrivateRoute({ children, user, ...rest }) {
     <Route
       {...rest}
       render={() => {
-        console.log(user)
+        console.log(user);
         return user ? children : <Redirect to="/login"></Redirect>;
       }}
     />
   );
 }
-
-// singup component
