@@ -1,20 +1,11 @@
 import "./styles/App.css";
 import logo from "./images/w-logo.png";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-  Redirect,
-} from "react-router-dom";
-import { useEffect, useState } from "react";
-import LandingPage from "./components/LandingPage.js";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
 import { Button } from "@material-ui/core";
 import { auth, db } from "./firebase.js";
 
-import Signup from "./components/Signup.js";
-import Login from "./components/Login.js";
+import RouterSwitch from "./components/RouterSwitch.js";
 
 // helper fucntions
 
@@ -23,7 +14,6 @@ function App() {
 
   // useEffect to check if a user is already logged in and will
   // auto login for them
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
@@ -44,11 +34,9 @@ function App() {
   return (
     <Router>
       <div className="app">
-        {/* header for login in and */}
-        {/* within header use react router */}
         <div className="app__header">
           <Link to="/">
-            <img className="app__logo" src={logo} />
+            <img alt="" className="app__logo" src={logo} />
           </Link>
           {user ? (
             <Button
@@ -70,20 +58,7 @@ function App() {
             </div>
           )}
         </div>
-
-        {/* router with all components in it. */}
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/signup">
-            <Signup />
-          </Route>
-          <Route>{/* route for seeing all posts */}</Route>
-          <PrivateRoute  path="/Home" user={user}>
-            <LandingPage />
-          </PrivateRoute>
-        </Switch>
+        <RouterSwitch />
       </div>
     </Router>
   );
@@ -92,15 +67,3 @@ function App() {
 export default App;
 
 // components
-
-function PrivateRoute({ children, user, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={() => {
-        console.log(user);
-        return user ? children : <Redirect to="/login"></Redirect>;
-      }}
-    />
-  );
-}
