@@ -1,9 +1,9 @@
 import "./styles/App.css";
 import logo from "./images/w-logo.png";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
-import { auth, db } from "./firebase.js";
+import { auth } from "./firebase.js";
 
 import RouterSwitch from "./components/RouterSwitch.js";
 

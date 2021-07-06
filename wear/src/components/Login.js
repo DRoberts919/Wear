@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import logo from "../images/w-logo.png";
 import { auth } from "../firebase.js";
 import { Input, Button } from "@material-ui/core";
-import { Redirect, withRouter } from "react-router-dom";
 import "../styles/login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const login = (evt) => {
+  const handleLogin = (evt) => {
     evt.preventDefault();
 
     auth
@@ -25,7 +24,7 @@ function Login() {
       <img alt="wearLogo" src={logo} className="app__logo" />
       <h1>lOGIN</h1>
 
-      <form className="login__form" onSubmit={login}>
+      <form className="login__form" onSubmit={handleLogin}>
         <Input
           placeholder="email"
           type="text"

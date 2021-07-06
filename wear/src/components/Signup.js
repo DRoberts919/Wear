@@ -24,7 +24,6 @@ function Signup() {
         });
       })
       .catch((error) => alert(error));
-    
 
     console.log("user signup works");
     setPassword("");

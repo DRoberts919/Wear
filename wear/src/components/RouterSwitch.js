@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import { auth } from "../firebase.js";
 
 import Signup from "./Signup.js";
@@ -14,7 +14,7 @@ function RouterSwitch() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        console.log(authUser);
+        console.log("Auth user"+authUser);
         setUser(authUser);
       } else {
         setUser(null);
@@ -27,10 +27,31 @@ function RouterSwitch() {
   }, [user]);
   return (
     <div className="routerSwitch">
-      <Route exact path="/login" component={Login}></Route>
-      <Route exact path="/signup" component={Signup}></Route>
-      <Route exact path="/Home" component={Home} />
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/signup" component={Signup} />
+      <AuthenticatedRoute path="/Home" authUser={user} component={Home} />
     </div>
+  );
+}
+
+function AuthenticatedRoute({
+  component: Component,
+  path,
+  authUser,
+  ...props
+}) {
+  console.log(path);
+  return (
+    // <Redirect
+    //   {...props}
+    //   to={path}
+    //   render={(routeProps) =>
+    //     authUser ? <Component /> : <Redirect to="/login" />
+    //   }
+    // />
+    <Route exact path="/Home">
+      {authUser ? <Component /> : <Redirect to="/login" />}
+    </Route>
   );
 }
 
