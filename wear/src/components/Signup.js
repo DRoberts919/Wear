@@ -1,42 +1,53 @@
 import React, { useState } from "react";
-import { auth } from "../firebase.js";
 import { Input, Button } from "@material-ui/core";
-import { withRouter } from "react-router";
 import logo from "../images/w-logo.png";
+import { useAuth } from "../context/AthContext";
+import { Alert } from "react-bootstrap";
 import "../styles/signUp.css";
+import { useHistory, Link } from "react-router-dom";
 
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [username, setUsername] = useState("");
+  const { signUp } = useAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
   // singup function that will use firebase to signup a user
-  const signUp = (evt) => {
+  async function handleSignUp(evt) {
     evt.preventDefault();
-    console.log(email);
-    console.log(password);
 
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((authuser) => {
-        return authuser.user.updateProfile({
-          displayName: username,
-        });
-      })
-      .catch((error) => alert(error));
+    if (password !== passwordConfirm) {
+      return setError("Passwords do not match");
+    }
+
+    try {
+      setError("");
+      setLoading(true);
+      await signUp(email, password, username);
+      history.pushState("/");
+    } catch {
+      setError("failed to create an accoutn");
+    }
+
+    setLoading(false);
 
     console.log("user signup works");
     setPassword("");
     setEmail("");
     setUsername("");
-  };
+  }
 
   return (
     <div className="auth__conatiner">
       <img alt="wearLogo" src={logo} className="app__logo" />
       <h1>Signup</h1>
 
-      <form className="signUp__form" onSubmit={signUp}>
+      <form className="signUp__form" onSubmit={handleSignUp}>
+        {error && <Alert variant="danger">{error}</Alert>}
         <Input
           name="email"
           placeholder="email"
@@ -52,6 +63,14 @@ function Signup() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <Input
+          name="passwordConfirm"
+          placeholder="Password Confirmation"
+          type="password"
+          value={passwordConfirm}
+          onChange={(e) => setPasswordConfirm(e.target.value)}
+        />
+
+        <Input
           name="username"
           placeholder="username"
           type="text"
@@ -59,10 +78,15 @@ function Signup() {
           onChange={(e) => setUsername(e.target.value)}
         />
 
-        <Button type="submit">signUp</Button>
+        <Button disabled={loading} type="submit">
+          signUp
+        </Button>
       </form>
+      <div className="w-100 text-center mt-2">
+        Need an Account? <Link to="/login">Sing Up</Link>
+      </div>
     </div>
   );
 }
 
-export default withRouter(Signup);
+export default Signup;

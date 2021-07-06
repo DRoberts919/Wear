@@ -1,23 +1,38 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import logo from "../images/w-logo.png";
 import { auth } from "../firebase.js";
 import { Input, Button } from "@material-ui/core";
+import { Link, useHistory } from "react-router-dom";
+import { useAuth } from "../context/AthContext";
+
 import "../styles/login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
+  const history = useHistory();
 
-  const handleLogin = (evt) => {
+  async function handleLogin(evt) {
     evt.preventDefault();
 
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .catch((error) => alert(error));
+    try {
+      setError("");
+      setLoading(true);
+      await login(email, password);
+      history.push("/")
+    } catch {
+      setError("failed to Sign in");
+    }
 
+    setLoading(false);
+
+    console.log("user signup works");
     setPassword("");
     setEmail("");
-  };
+  }
 
   return (
     <div className="login__conatiner">
@@ -40,6 +55,9 @@ function Login() {
 
         <Button type="submit">Log-In</Button>
       </form>
+      <div className="w-100 text-center mt-2">
+        Need an Account? <Link to="/signup">Sing Up</Link>
+      </div>
     </div>
   );
 }
