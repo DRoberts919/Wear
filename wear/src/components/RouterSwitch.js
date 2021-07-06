@@ -14,7 +14,7 @@ function RouterSwitch() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        console.log("Auth user"+authUser);
+        console.log("Auth user" + authUser);
         setUser(authUser);
       } else {
         setUser(null);
@@ -29,29 +29,51 @@ function RouterSwitch() {
     <div className="routerSwitch">
       <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={Signup} />
-      <AuthenticatedRoute path="/Home" authUser={user} component={Home} />
+      {/* <AuthenticatedRoute path="/Home" authUser={user} component={Home} /> */}
+      <PrivateRoute exact={true} path="/Home" authenticated={user} component={Home}/>
     </div>
   );
 }
 
-function AuthenticatedRoute({
-  component: Component,
-  path,
-  authUser,
-  ...props
-}) {
-  console.log(path);
+// function AuthenticatedRoute({
+//   component: Component,
+//   path,
+//   authUser,
+//   ...props
+// }) {
+//   console.log(path);
+//   return (
+//     // <Redirect
+//     //   {...props}
+//     //   to={path}
+//     //   render={(routeProps) =>
+//     //     authUser ? <Component /> : <Redirect to="/login" />
+//     //   }
+//     // />
+//     <Route exact path="/Home">
+//       {authUser ? <Component /> : <Redirect to="/login" />}
+//     </Route>
+//   );
+// }
+
+// function AuthenticatedRoute({authUser,...rest}){
+//   const user = authUser;
+//   if(!user){
+//     <Redirect to="/login"/>
+
+//   }
+//   return <Route {...rest}/>
+// }
+
+function PrivateRoute({ component: Component, authenticated, path, exact }) {
   return (
-    // <Redirect
-    //   {...props}
-    //   to={path}
-    //   render={(routeProps) =>
-    //     authUser ? <Component /> : <Redirect to="/login" />
-    //   }
-    // />
-    <Route exact path="/Home">
-      {authUser ? <Component /> : <Redirect to="/login" />}
-    </Route>
+    <Route
+      path={path}
+      exact={exact}
+      render={(props) =>
+        authenticated ? <Component {...props} /> : <Redirect to="/login" />
+      }
+    />
   );
 }
 
