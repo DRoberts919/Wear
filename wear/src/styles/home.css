@@ -9,27 +9,33 @@
 .home__posts {
   background-color: red;
   width: 75%;
-  height: 100vh;
+  height: 1000vh;
 }
 
 .home__userNav {
   background-color: #f9f8f8;
   width: 25%;
   height: 70vh;
+  margin-right: 5px;
   border-radius: 30px;
   position: sticky;
-  right: 0;
-  z-index: 90;
+  right: 0%;
+  top: 23%;
+  z-index: 99;
 }
 
 /* css for the UserNav */
 
 .UserNav {
   padding-top: 5px;
-  
+  margin: 0 auto;
 }
 
 .userNav__buttonContainer {
   display: flex;
   flex-direction: column;
+}
+
+.userNav__button {
+  height: 40px;
 }

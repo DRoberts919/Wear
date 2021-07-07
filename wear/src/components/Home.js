@@ -3,11 +3,13 @@ import Button from "@material-ui/core/Button";
 
 import Posts from "../components/Posts";
 import { useAuth } from "../context/AuthContext";
-
 import "../styles/home.css";
+import logo from "../images/w-logo.png";
 
 // material-ui Imports
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import StarIcon from "@material-ui/icons/Star";
+import PersonIcon from "@material-ui/icons/Person";
 import { Avatar } from "@material-ui/core";
 
 function Home() {
@@ -41,25 +43,26 @@ function UserNav() {
 
   return (
     <div className="UserNav">
-      <Avatar
-        src="/static/images/avatr/1.jpg"
-        alt={currentUser.displayName}
-      />
-      <h1>{currentUser.displayName}</h1>
+      <div className="userNav__header">
+        <Avatar src={logo} alt={currentUser.displayName} sizes="large" />
+        <h1>{currentUser.displayName}</h1>
+      </div>
 
       <div className="userNav__buttonContainer">
         <Button>
-          <div className="userNav__myAcount">
+          <div className="userNav__button userNav__myAcount">
             <a>My Account</a>
+            <PersonIcon />
           </div>
         </Button>
         <Button>
-          <div className="userNav__wishList">
+          <div className="userNav__button userNav__wishList">
             <a>Wish List</a>
+            <StarIcon />
           </div>
         </Button>
         <Button>
-          <div className="userNav__Cart">
+          <div className="userNav__button userNav__Cart">
             <a>Cart</a>
             <ShoppingCartIcon />
           </div>
