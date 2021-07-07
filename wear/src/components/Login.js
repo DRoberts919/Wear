@@ -33,6 +33,7 @@ function Login() {
       history.push("/home");
     } catch {
       setError("failed to Sign in");
+      alert(error);
     }
 
     setLoading(false);

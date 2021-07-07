@@ -51,19 +51,19 @@ function UserNav() {
       <div className="userNav__buttonContainer">
         <Button>
           <div className="userNav__button userNav__myAcount">
-            <a>My Account</a>
+            <p>My Account</p>
             <PersonIcon />
           </div>
         </Button>
         <Button>
           <div className="userNav__button userNav__wishList">
-            <a>Wish List</a>
+            <p>Wish List</p>
             <StarIcon />
           </div>
         </Button>
         <Button>
           <div className="userNav__button userNav__Cart">
-            <a>Cart</a>
+            <p>Cart</p>
             <ShoppingCartIcon />
           </div>
         </Button>
