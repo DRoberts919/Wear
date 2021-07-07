@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../images/w-logo.png";
-import { auth } from "../firebase.js";
+
 import { Input, Button } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
-import { useAuth } from "../context/AthContext";
+import { useAuth } from "../context/AuthContext";
 
 import "../styles/login.css";
 
@@ -12,8 +12,16 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, currentUser } = useAuth();
   const history = useHistory();
+
+  useEffect(() => {
+    console.log(currentUser);
+
+    if (currentUser) {
+      history.push("/home");
+    }
+  }, [currentUser]);
 
   async function handleLogin(evt) {
     evt.preventDefault();
@@ -22,7 +30,7 @@ function Login() {
       setError("");
       setLoading(true);
       await login(email, password);
-      history.push("/")
+      history.push("/home");
     } catch {
       setError("failed to Sign in");
     }

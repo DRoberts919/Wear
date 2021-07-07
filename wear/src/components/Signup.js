@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Input, Button } from "@material-ui/core";
 import logo from "../images/w-logo.png";
-import { useAuth } from "../context/AthContext";
+import { useAuth } from "../context/AuthContext";
 import { Alert } from "react-bootstrap";
 import "../styles/signUp.css";
 import { useHistory, Link } from "react-router-dom";
@@ -28,7 +28,7 @@ function Signup() {
       setError("");
       setLoading(true);
       await signUp(email, password, username);
-      history.pushState("/");
+      history.pushState("/home");
     } catch {
       setError("failed to create an accoutn");
     }

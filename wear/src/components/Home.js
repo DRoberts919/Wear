@@ -1,42 +1,70 @@
-import React, { useEffect ,useState} from "react";
-import { Button } from "react-bootstrap";
-import { useAuth } from "../context/AthContext";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import Button from "@material-ui/core/Button";
+
+import Posts from "../components/Posts";
+import { useAuth } from "../context/AuthContext";
+
+import "../styles/home.css";
+
+// material-ui Imports
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { Avatar } from "@material-ui/core";
 
 function Home() {
-  const [error, setError] = useState("");
-  const { currentUser, logout } = useAuth();
-  const history = useHistory();
-
-  async function handleLogout() {
-    setError("");
-
-    try {
-      await logout();
-      history.push("/login");
-    } catch {
-      setError("failed to logout");
-    }
-  }
-
-  useEffect(() => {
-    console.log("home page works");
-  }, []);
-
   return (
     <div className="Home">
-      <h1>Home Page</h1>
-      <p>
-        this is all of the things that i would really like to say to you if you
-        do not mind
-      </p>
-      <div className="w-100 text-center mt-2">
+      {/* Post Feed div with post component 
+                {component that loads all posts}
+      */}
+
+      <div className="home__posts">
+        <Posts />
+      </div>
+      {/* user Nave bar div with component */}
+      <div className="home__userNav">
+        <UserNav />
+      </div>
+
+      {/* <div className="w-100 text-center mt-2">
         <Button type="link" onClick={handleLogout}>
           logout
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 }
 
 export default Home;
+
+function UserNav() {
+  const { currentUser } = useAuth();
+
+  return (
+    <div className="UserNav">
+      <Avatar
+        src="/static/images/avatr/1.jpg"
+        alt={currentUser.displayName}
+      />
+      <h1>{currentUser.displayName}</h1>
+
+      <div className="userNav__buttonContainer">
+        <Button>
+          <div className="userNav__myAcount">
+            <a>My Account</a>
+          </div>
+        </Button>
+        <Button>
+          <div className="userNav__wishList">
+            <a>Wish List</a>
+          </div>
+        </Button>
+        <Button>
+          <div className="userNav__Cart">
+            <a>Cart</a>
+            <ShoppingCartIcon />
+          </div>
+        </Button>
+      </div>
+    </div>
+  );
+}
