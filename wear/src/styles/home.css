@@ -39,3 +39,10 @@
 .userNav__button {
   height: 40px;
 }
+
+.link{
+  text-decoration: none;
+  text-decoration-color: none;
+  color: black;
+  
+}

@@ -1,14 +1,9 @@
 import "./styles/App.css";
 import logo from "./images/w-logo.png";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 import { Button } from "@material-ui/core";
-import {  useAuth } from "./context/AuthContext";
+import { useAuth } from "./context/AuthContext";
 import { auth } from "./firebase";
 
 import Signup from "./components/Signup";
@@ -19,8 +14,7 @@ import PrivateRoute from "./components/PrivateRoute";
 // helper fucntions
 
 function App() {
-  
-  const {currentUser} = useAuth();
+  const { currentUser } = useAuth();
 
   return (
     <Router>

@@ -83,7 +83,7 @@ function Signup() {
         </Button>
       </form>
       <div className="w-100 text-center mt-2">
-        Need an Account? <Link to="/login">Sing Up</Link>
+        Have an account? <Link to="/login">Login In</Link> here
       </div>
     </div>
   );
