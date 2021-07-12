@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { storage, db, auth } from "../firebase";
+import { storage, db } from "../firebase";
 import firebase from "firebase";
 import Button from "@material-ui/core/Button";
 import { useAuth } from "../context/AuthContext";
@@ -14,6 +14,7 @@ function UserPost() {
   const [price, setPrice] = useState();
   const [progress, setProgress] = useState(0);
   const [image, setImage] = useState(null);
+  const [title, setTitle] = useState("");
   const [userId, setUserId] = useState("");
   const [displayname, setDisplayname] = useState("");
   const { currentUser } = useAuth();
@@ -23,7 +24,7 @@ function UserPost() {
   useEffect(() => {
     setUserId(currentUser.uid);
     setDisplayname(currentUser.displayName);
-  }, []);
+  }, [currentUser]);
 
   // helper function to set style
   const changeStyle = (e) => {
@@ -76,6 +77,7 @@ function UserPost() {
             db.collection("posts").add({
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               caption: caption,
+              title: title,
               imageUrl: url,
               price: price,
               username: displayname,
@@ -99,6 +101,8 @@ function UserPost() {
       <hr />
 
       <form className="userPost__form">
+        <h3>Title</h3>
+        <input type="text" onChange={(e) => setTitle(e.target.value)} placeholder="Title"></input>
         <h3>Caption</h3>
         <textarea
           type="text"

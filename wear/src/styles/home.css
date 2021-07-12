@@ -7,9 +7,7 @@
 }
 
 .home__posts {
-  background-color: red;
   width: 75%;
-  height: 1000vh;
 }
 
 .home__userNav {
@@ -18,7 +16,7 @@
   height: 70vh;
   margin-right: 5px;
   border-radius: 30px;
-  position: sticky;
+  position: fixed;
   right: 0%;
   top: 23%;
   z-index: 99;
@@ -40,9 +38,8 @@
   height: 40px;
 }
 
-.link{
+.link {
   text-decoration: none;
   text-decoration-color: none;
   color: black;
-  
 }

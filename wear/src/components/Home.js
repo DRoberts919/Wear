@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/home.css";
 import Post from "../components/Posts";
 import { useAuth } from "../context/AuthContext";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Link } from "react-router-dom";
 import logo from "../images/w-logo.png";
 import Account from "./Account";
 import Cart from "./Cart.js";
@@ -17,6 +17,7 @@ import Button from "@material-ui/core/Button";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import StarIcon from "@material-ui/icons/Star";
 import PersonIcon from "@material-ui/icons/Person";
+import AddIcon from "@material-ui/icons/Add";
 import { Avatar } from "@material-ui/core";
 
 function Home() {
@@ -25,7 +26,6 @@ function Home() {
       <Router>
         <Switch>
           <PrivateRoute path="/home" component={Landing} />
-
           <PrivateRoute path="/account" component={Account} />
           <PrivateRoute path="/cart" component={Cart} />
           <PrivateRoute path="/wishList" component={WishList} />
@@ -81,7 +81,7 @@ function UserNav() {
           <Link to={`/post`} className="link">
             <div className="userNav__button userNav__Post">
               <p>Post</p>
-              <ShoppingCartIcon />
+              <AddIcon />
             </div>
           </Link>
         </Button>
@@ -92,7 +92,7 @@ function UserNav() {
 
 function Landing() {
   const [posts, setPosts] = useState([]);
-  console.log(posts);
+  
 
   // useEffect to get all posts
   useEffect(() => {
@@ -110,15 +110,17 @@ function Landing() {
   return (
     <div className="Home">
       <div className="home__posts">
-        {posts.map(({ id, post }) => {
+        {posts.map(({ id, post }) => (
           <Post
             key={id}
+            title={post.title}
             username={post.username}
             caption={post.caption}
             imageUrl={post.imageUrl}
             price={post.price}
-          />;
-        })}
+            postId={id}
+          />
+        ))}
         <Post />
       </div>
       {/* user Nave bar div with component */}
