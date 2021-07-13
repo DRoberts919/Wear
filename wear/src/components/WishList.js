@@ -126,7 +126,6 @@ function WishListItem({ id }) {
 
       <h2>{title}</h2>
       <h3>$: {price}</h3>
-      <h3>{postId}</h3>
       <Button onClick={addToCart}>
         <ShoppingCartIcon />
       </Button>
