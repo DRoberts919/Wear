@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { db, firebase } from "../firebase";
-import "../styles/cart.css"
+import "../styles/cart.css";
 
 // material-ui
 import { Button } from "@material-ui/core";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 function Cart() {
   const [usersCart, setUsersCart] = useState([]);
@@ -26,7 +27,7 @@ function Cart() {
       });
 
     return getCartData;
-  }, []);
+  }, [currentUser,usersCart]);
 
   return (
     <div className="cart">
@@ -53,10 +54,10 @@ function CartItem({ id }) {
   const [imgUrl, setImgUrl] = useState("");
   const [title, setTitle] = useState("");
   const [postId, setPostId] = useState("");
+  const [updater, setUpdater] = useState(1);
   const { currentUser } = useAuth();
 
   //   useEffect to get each individual item
-
   useEffect(() => {
     const getItem = db
       .collection("posts")
@@ -70,14 +71,29 @@ function CartItem({ id }) {
       });
 
     return getItem;
-  }, []);
+  }, [id, updater]);
+
+  const removeItem = () => {
+    db.collection("ShoppingCart")
+      .doc(currentUser.uid)
+      .update({
+        cart: firebase.firestore.FieldValue.arrayRemove(postId),
+      })
+      .then(() => {
+        setUpdater(updater + 1);
+      });
+  };
 
   return (
     <div className="cartItem">
-      <img className="cartItem__img" src={imgUrl} />
+      <img className="cartItem__img" src={imgUrl} alt="" />
 
       <h2>{title}</h2>
       <h3>$: {price}</h3>
+
+      <Button onClick={removeItem}>
+        <HighlightOffIcon style={{ fill: "red" }} />
+      </Button>
     </div>
   );
 }

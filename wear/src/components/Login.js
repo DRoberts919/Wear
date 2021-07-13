@@ -11,32 +11,30 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+
   const { login, currentUser } = useAuth();
   const history = useHistory();
 
   useEffect(() => {
-    console.log(currentUser);
+    // console.log(currentUser);
 
     if (currentUser) {
       history.push("/home");
     }
-  }, [currentUser]);
+  }, [currentUser, history]);
 
   async function handleLogin(evt) {
     evt.preventDefault();
 
     try {
       setError("");
-      setLoading(true);
+
       await login(email, password);
       history.push("/home");
     } catch {
       setError("failed to Sign in");
       alert(error);
     }
-
-    setLoading(false);
 
     console.log("user signup works");
     setPassword("");

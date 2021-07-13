@@ -92,7 +92,6 @@ function UserNav() {
 
 function Landing() {
   const [posts, setPosts] = useState([]);
-  
 
   // useEffect to get all posts
   useEffect(() => {
@@ -105,7 +104,8 @@ function Landing() {
           snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
         );
       });
-  }, [posts]);
+    console.log(posts);
+  }, []);
 
   return (
     <div className="Home">

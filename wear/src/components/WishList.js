@@ -11,7 +11,6 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 function WishList() {
   // variable for storing all users current wishlist items
   const [usersWishList, setUsersWishList] = useState([]);
-  const [change, setChange] = useState(1);
   const { currentUser } = useAuth();
 
   //   useEffect to get all the users current wishilist items and sets it
@@ -32,7 +31,7 @@ function WishList() {
       });
 
     return getData;
-  }, []);
+  }, [currentUser,usersWishList]);
 
   return (
     <div className="wishList">
@@ -61,8 +60,8 @@ function WishListItem({ id }) {
   const [postId, setPostId] = useState("");
 
   // useEffect to get the certain list item
-  useEffect(async () => {
-    const getPost = await db
+  useEffect(() => {
+    const getPost = db
       .collection("posts")
       .doc(id)
       .get()
@@ -106,7 +105,7 @@ function WishListItem({ id }) {
 
   return (
     <div className="wishListItem">
-      <img className="wishListItem__img" src={imgUrl} />
+      <img className="wishListItem__img" src={imgUrl} alt="" />
 
       <h2>{title}</h2>
       <h3>$: {price}</h3>

@@ -1,10 +1,10 @@
 import "./styles/App.css";
 import logo from "./images/w-logo.png";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
-  useHistory,
+  // useHistory,
   Switch,
   Link,
 } from "react-router-dom";
@@ -22,14 +22,14 @@ import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const { currentUser } = useAuth();
-  // // const history = useHistory();
+
   // const test = useHistory();
 
   // useEffect(() => {
   //   if (currentUser) {
   //     test.push("/home");
   //   }
-  // }, [currentUser]);
+  // }, [currentUser,test]);
 
   return (
     <Router>
