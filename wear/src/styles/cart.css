@@ -1,0 +1,22 @@
+.cart {
+  width: 100%;
+}
+
+.cartItem {
+  width: 60%;
+  height: 100px;
+  background-color: #f9f8f8;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  margin-bottom: 6px;
+  border-radius: 4px;
+}
+
+.cartItem__img {
+  width: 80px;
+  height: 80px;
+  margin-left: 10px;
+  margin-right: 20px;
+  object-fit: contain;
+}

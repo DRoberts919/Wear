@@ -1,6 +1,13 @@
 import "./styles/App.css";
 import logo from "./images/w-logo.png";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  useHistory,
+  Switch,
+  Link,
+} from "react-router-dom";
 
 import { Button } from "@material-ui/core";
 import { useAuth } from "./context/AuthContext";
@@ -15,6 +22,14 @@ import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const { currentUser } = useAuth();
+  // // const history = useHistory();
+  // const test = useHistory();
+
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     test.push("/home");
+  //   }
+  // }, [currentUser]);
 
   return (
     <Router>
@@ -43,7 +58,6 @@ function App() {
             </div>
           )}
         </div>
-        {/* <RouterSwitch /> */}
         <Switch>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
@@ -55,5 +69,3 @@ function App() {
 }
 
 export default App;
-
-// components

@@ -11,14 +11,12 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 function WishList() {
   // variable for storing all users current wishlist items
   const [usersWishList, setUsersWishList] = useState([]);
-  const [list, setList] = useState([]);
   const [change, setChange] = useState(1);
   const { currentUser } = useAuth();
 
   //   useEffect to get all the users current wishilist items and sets it
 
   useEffect(() => {
-    let newList = [];
     // access the WishList database
     const getData = db
       .collection("WishList")
@@ -27,27 +25,14 @@ function WishList() {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          setList(doc.data().postList);
-          // console.log(doc.data().postList);
-          setChange(change + 1);
+          setUsersWishList(doc.data().postList);
         } else {
           setUsersWishList("no data exists for this user");
         }
-      })
-      .then(
-        list.map((postsId) => {
-          // console.log(postsId);
-          // console.log(newList);
-          newList.push(postsId);
-          // console.log(newList);
-          setUsersWishList(newList);
-        })
-      );
+      });
 
     return getData;
-  }, [change]);
-
-  // console.log(usersWishList);
+  }, []);
 
   return (
     <div className="wishList">
@@ -70,7 +55,6 @@ export default WishList;
 
 function WishListItem({ id }) {
   const { currentUser } = useAuth();
-  const [list, setList] = useState(null);
   const [price, setPrice] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const [title, setTitle] = useState("");
@@ -78,7 +62,7 @@ function WishListItem({ id }) {
 
   // useEffect to get the certain list item
   useEffect(async () => {
-    const getPost = db
+    const getPost = await db
       .collection("posts")
       .doc(id)
       .get()
@@ -90,7 +74,7 @@ function WishListItem({ id }) {
       });
 
     return getPost;
-  }, [list]);
+  }, []);
 
   const addToCart = () => {
     var docRef = db.collection("ShoppingCart").doc(currentUser.uid);
