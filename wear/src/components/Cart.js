@@ -27,7 +27,7 @@ function Cart() {
       });
 
     return getCartData;
-  }, [currentUser,usersCart]);
+  }, [currentUser, usersCart]);
 
   return (
     <div className="cart">
