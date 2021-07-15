@@ -44,6 +44,8 @@ function UserPost() {
   const changeImage = (e) => {
     if (e.target.value[0]) {
       setImage(e.target.files[0]);
+
+      console.log(e.target.files[0]);
     }
   };
 
@@ -102,7 +104,11 @@ function UserPost() {
 
       <form className="userPost__form">
         <h3>Title</h3>
-        <input type="text" onChange={(e) => setTitle(e.target.value)} placeholder="Title"></input>
+        <input
+          type="text"
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Title"
+        ></input>
         <h3>Caption</h3>
         <textarea
           type="text"

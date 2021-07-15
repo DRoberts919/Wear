@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { db, firebase } from "../firebase";
 import "../styles/wishList.css";
@@ -11,8 +11,17 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 function WishList() {
   // variable for storing all users current wishlist items
   const [usersWishList, setUsersWishList] = useState([]);
+  const [list, setList] = useState([]);
   const { currentUser } = useAuth();
+  const history = useHistory();
 
+  useEffect(() => {
+    // console.log(currentUser);
+
+    if (currentUser) {
+      history.push("/wishlist");
+    }
+  }, [currentUser, history]);
   //   useEffect to get all the users current wishilist items and sets it
 
   useEffect(() => {
@@ -20,18 +29,17 @@ function WishList() {
     const getData = db
       .collection("WishList")
       // get the data that corresponds with the users id
-      .doc(currentUser.uid)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          setUsersWishList(doc.data().postList);
-        } else {
-          setUsersWishList("no data exists for this user");
-        }
+      .onSnapshot((snapshot) => {
+        setUsersWishList(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            post: doc.data().postList,
+          }))
+        );
       });
 
     return getData;
-  }, [currentUser,usersWishList]);
+  }, [currentUser, usersWishList]);
 
   return (
     <div className="wishList">
@@ -42,9 +50,9 @@ function WishList() {
         </Link>
       </div>
       <div className="wishList__body">
-        {usersWishList.map((itemId) => (
-          <WishListItem id={itemId} />
-        ))}
+        {usersWishList.map(({ id, post }) => {
+          return post.map((id) => <WishListItem id={id} />);
+        })}
       </div>
     </div>
   );
@@ -112,6 +120,56 @@ function WishListItem({ id }) {
       <Button onClick={addToCart}>
         <ShoppingCartIcon />
       </Button>
+    </div>
+  );
+}
+
+function WishListItems({ list }) {
+  const [price, setPrice] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
+  const [title, setTitle] = useState("");
+  const [postId, setPostId] = useState("");
+  const [tempList, setTempList] = useState([]);
+
+  useEffect(() => {
+    let holder = [];
+    const test = list.map((id) => {
+      console.log(id);
+      db.collection("posts")
+        .doc(id)
+        .get()
+        .then((doc) => {
+          // console.log(doc.data());
+          holder.push(doc.data());
+          // console.log(holder);
+          setTempList(holder);
+        });
+      // console.log(holder);
+      // console.log(tempList);
+    });
+
+    // setTempList(holder);
+    // console.log(tempList);
+
+    return test;
+  }, [list]);
+
+  console.log(tempList);
+
+  return (
+    <div className="wishlistItem">
+      {tempList.map((item, index) => (
+        <div className="wishListItem" key={index}>
+          {console.log(item)}
+          <img className="wishListItem__img" src={item.imgUrl} alt="" />
+
+          <h2>{item.title}</h2>
+          <h3>$: {item.price}</h3>
+          <Button>
+            <ShoppingCartIcon />
+          </Button>
+        </div>
+      ))}
     </div>
   );
 }
