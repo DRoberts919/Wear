@@ -12,15 +12,7 @@ function WishList() {
   // variable for storing all users current wishlist items
   const [usersWishList, setUsersWishList] = useState([]);
   const { currentUser } = useAuth();
-  const history = useHistory();
 
-  useEffect(() => {
-    // console.log(currentUser);
-
-    if (currentUser) {
-      history.push("/wishlist");
-    }
-  }, [currentUser, history]);
   //   useEffect to get all the users current wishilist items and sets it
 
   useEffect(() => {
@@ -39,7 +31,7 @@ function WishList() {
       });
 
     return getData;
-  }, [currentUser, usersWishList]);
+  }, [usersWishList]);
 
   return (
     <div className="wishList">
@@ -126,56 +118,6 @@ function WishListItem({ id }) {
       <Button onClick={addToCart}>
         <ShoppingCartIcon />
       </Button>
-    </div>
-  );
-}
-
-function WishListItems({ list }) {
-  const [price, setPrice] = useState("");
-  const [imgUrl, setImgUrl] = useState("");
-  const [title, setTitle] = useState("");
-  const [postId, setPostId] = useState("");
-  const [tempList, setTempList] = useState([]);
-
-  useEffect(() => {
-    let holder = [];
-    const test = list.map((id) => {
-      console.log(id);
-      db.collection("posts")
-        .doc(id)
-        .get()
-        .then((doc) => {
-          // console.log(doc.data());
-          holder.push(doc.data());
-          // console.log(holder);
-          setTempList(holder);
-        });
-      // console.log(holder);
-      // console.log(tempList);
-    });
-
-    // setTempList(holder);
-    // console.log(tempList);
-
-    return test;
-  }, [list]);
-
-  console.log(tempList);
-
-  return (
-    <div className="wishlistItem">
-      {tempList.map((item, index) => (
-        <div className="wishListItem" key={index}>
-          {console.log(item)}
-          <img className="wishListItem__img" src={item.imgUrl} alt="" />
-
-          <h2>{item.title}</h2>
-          <h3>$: {item.price}</h3>
-          <Button>
-            <ShoppingCartIcon />
-          </Button>
-        </div>
-      ))}
     </div>
   );
 }

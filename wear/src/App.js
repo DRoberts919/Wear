@@ -16,20 +16,16 @@ import { auth } from "./firebase";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Home from "./components/Home";
+import Account from "./components/Account";
+import Cart from "./components/Cart.js";
+import WishList from "./components/WishList";
+import UserPost from "./components/UserPost";
 import PrivateRoute from "./components/PrivateRoute";
 
 // helper fucntions
 
 function App() {
   const { currentUser } = useAuth();
-
-  // const test = useHistory();
-
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     test.push("/home");
-  //   }
-  // }, [currentUser,test]);
 
   return (
     <Router>
@@ -62,6 +58,10 @@ function App() {
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <PrivateRoute exact path="/home" component={Home} />
+          <PrivateRoute path="/account" component={Account} />
+          <PrivateRoute path="/cart" component={Cart} />
+          <PrivateRoute path="/wishList" component={WishList} />
+          <PrivateRoute path="/post" component={UserPost} />
         </Switch>
       </div>
     </Router>

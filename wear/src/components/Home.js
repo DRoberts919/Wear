@@ -3,13 +3,21 @@ import React, { useEffect, useState } from "react";
 import "../styles/home.css";
 import Post from "../components/Posts";
 import { useAuth } from "../context/AuthContext";
-import { BrowserRouter as Router, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Link,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import logo from "../images/w-logo.png";
+// components
 import Account from "./Account";
 import Cart from "./Cart.js";
 import WishList from "./WishList";
-import PrivateRoute from "./PrivateRoute";
 import UserPost from "./UserPost";
+// --------------
+import PrivateRoute from "./PrivateRoute";
 import { db } from "../firebase";
 
 // material-ui Imports
@@ -21,17 +29,40 @@ import AddIcon from "@material-ui/icons/Add";
 import { Avatar } from "@material-ui/core";
 
 function Home() {
+  const [posts, setPosts] = useState([]);
+
+  // useEffect to get all posts
+  useEffect(() => {
+    // access my posts database
+    db.collection("posts")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        // onSnapShot will update this component when new data is provided
+        setPosts(
+          snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
+        );
+      });
+  }, [posts]);
+
   return (
-    <div className="Home">
-      <Router>
-        <Switch>
-          <PrivateRoute path="/home" component={Landing} />
-          <PrivateRoute path="/account" component={Account} />
-          <PrivateRoute path="/cart" component={Cart} />
-          <PrivateRoute path="/wishList" component={WishList} />
-          <PrivateRoute path="/post" component={UserPost} />
-        </Switch>
-      </Router>
+    <div className="landing">
+      <div className="home__posts">
+        {posts.map(({ id, post }) => (
+          <Post
+            key={id}
+            title={post.title}
+            username={post.username}
+            caption={post.caption}
+            imageUrl={post.imageUrl}
+            price={post.price}
+            postId={id}
+          />
+        ))}
+      </div>
+      {/* user Nave bar div with component */}
+      <div className="home__userNav">
+        <UserNav />
+      </div>
     </div>
   );
 }
@@ -104,11 +135,10 @@ function Landing() {
           snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
         );
       });
-    console.log(posts);
-  }, []);
+  }, [posts]);
 
   return (
-    <div className="Home">
+    <div className="landing">
       <div className="home__posts">
         {posts.map(({ id, post }) => (
           <Post
@@ -121,7 +151,6 @@ function Landing() {
             postId={id}
           />
         ))}
-        <Post />
       </div>
       {/* user Nave bar div with component */}
       <div className="home__userNav">
