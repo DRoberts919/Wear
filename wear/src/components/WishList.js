@@ -11,7 +11,6 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 function WishList() {
   // variable for storing all users current wishlist items
   const [usersWishList, setUsersWishList] = useState([]);
-  const [list, setList] = useState([]);
   const { currentUser } = useAuth();
   const history = useHistory();
 
@@ -29,13 +28,14 @@ function WishList() {
     const getData = db
       .collection("WishList")
       // get the data that corresponds with the users id
-      .onSnapshot((snapshot) => {
-        setUsersWishList(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            post: doc.data().postList,
-          }))
-        );
+      .doc(currentUser.uid)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setUsersWishList(doc.data().postList);
+        } else {
+          setUsersWishList("no data exits");
+        }
       });
 
     return getData;
@@ -50,9 +50,13 @@ function WishList() {
         </Link>
       </div>
       <div className="wishList__body">
-        {usersWishList.map(({ id, post }) => {
+        {/* {usersWishList.map(({ id, post }) => {
           return post.map((id) => <WishListItem id={id} />);
-        })}
+        })} */}
+
+        {usersWishList.map((itemid) => (
+          <WishListItem id={itemid} />
+        ))}
       </div>
     </div>
   );
@@ -66,6 +70,7 @@ function WishListItem({ id }) {
   const [imgUrl, setImgUrl] = useState("");
   const [title, setTitle] = useState("");
   const [postId, setPostId] = useState("");
+  const [updater, setUpdater] = useState(1);
 
   // useEffect to get the certain list item
   useEffect(() => {
@@ -81,7 +86,7 @@ function WishListItem({ id }) {
       });
 
     return getPost;
-  }, []);
+  }, [id, updater]);
 
   const addToCart = () => {
     var docRef = db.collection("ShoppingCart").doc(currentUser.uid);
@@ -107,7 +112,8 @@ function WishListItem({ id }) {
           .doc(currentUser.uid)
           .update({
             postList: firebase.firestore.FieldValue.arrayRemove(postId),
-          })
+          }),
+        setUpdater(updater + 1)
       );
   };
 
