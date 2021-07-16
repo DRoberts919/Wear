@@ -28,7 +28,7 @@ function Signup() {
       setError("");
       setLoading(true);
       await signUp(email, password, username);
-      history.pushState("/home");
+      history.push("/home");
     } catch {
       setError("failed to create an accoutn");
     }

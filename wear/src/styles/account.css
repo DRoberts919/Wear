@@ -1,0 +1,13 @@
+/* account main div */
+
+.account {
+  /* size */
+  width: 50%;
+  min-height: 300px;
+
+  /* spacing */
+  margin: 0 auto;
+
+  /* color */
+  background-color: #f9f8f8;
+}

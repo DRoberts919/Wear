@@ -3,21 +3,9 @@ import React, { useEffect, useState } from "react";
 import "../styles/home.css";
 import Post from "../components/Posts";
 import { useAuth } from "../context/AuthContext";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Link,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "../images/w-logo.png";
-// components
-import Account from "./Account";
-import Cart from "./Cart.js";
-import WishList from "./WishList";
-import UserPost from "./UserPost";
-// --------------
-import PrivateRoute from "./PrivateRoute";
+
 import { db } from "../firebase";
 
 // material-ui Imports

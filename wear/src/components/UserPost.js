@@ -61,7 +61,6 @@ function UserPost() {
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
-        console.log(progress);
         setProgress(progress);
       },
       (err) => {
