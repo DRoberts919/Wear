@@ -11,3 +11,20 @@
   /* color */
   background-color: #f9f8f8;
 }
+
+/* userImg */
+
+.userImg {
+  /* size */
+  width: 50px;
+  max-width: 100px;
+  height: 150px;
+  background-color: white;
+  margin-bottom: 45px;
+}
+
+.userImg__image {
+  width: 100%;
+  max-width: 75px;
+  object-fit: contain;
+}

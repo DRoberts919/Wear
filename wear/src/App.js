@@ -13,6 +13,7 @@ import { Button } from "@material-ui/core";
 import { useAuth } from "./context/AuthContext";
 import { auth } from "./firebase";
 
+// components
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Home from "./components/Home";
@@ -21,6 +22,7 @@ import Cart from "./components/Cart.js";
 import WishList from "./components/WishList";
 import UserPost from "./components/UserPost";
 import PrivateRoute from "./components/PrivateRoute";
+import EditAccount from "./components/EditAccount";
 
 // helper fucntions
 
@@ -62,6 +64,7 @@ function App() {
           <PrivateRoute path="/cart" component={Cart} />
           <PrivateRoute path="/wishList" component={WishList} />
           <PrivateRoute path="/post" component={UserPost} />
+          <PrivateRoute path="/editAccount" component={EditAccount} />
         </Switch>
       </div>
     </Router>

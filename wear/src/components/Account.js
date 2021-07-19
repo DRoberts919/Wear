@@ -9,7 +9,8 @@ import { db } from "../firebase";
 import "../styles/account.css";
 
 // material-ui
-import { Avatar } from "@material-ui/core";
+import { Avatar, Button } from "@material-ui/core";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 function Account() {
   const { currentUser } = useAuth();
@@ -19,6 +20,8 @@ function Account() {
   // useEffect to get the users description
 
   useEffect(() => {
+    var postList = [];
+
     var getDescription = db
       .collection("userCollection")
       .get()
@@ -36,13 +39,11 @@ function Account() {
       .then((queryData) => {
         queryData.forEach((data) => {
           if (data.data().userId === currentUser.uid) {
-            console.log(data.data());
-            setUsersImg(data.data());
+            postList.push(data.data());
           }
         });
+        setUsersImg(postList);
       });
-
-    console.log(usersImg);
 
     return getDescription, getPosts;
   }, []);
@@ -58,12 +59,15 @@ function Account() {
         <h1 className="account__userName">{currentUser.displayName}</h1>
         {/* users dectiption */}
         <h5>{description}</h5>
+        <Button>
+          <SettingsIcon />
+        </Button>
       </div>
       <hr></hr>
       <div className="account__posts">
-        {/* {usersImg.map((imgData) => (
+        {usersImg.map((imgData) => (
           <UserImg data={imgData} />
-        ))} */}
+        ))}
       </div>
     </div>
   );
@@ -74,5 +78,11 @@ export default Account;
 function UserImg({ data }) {
   console.log(data);
 
-  return <div></div>;
+  return (
+    <div className="userImg">
+      <img className="userImg__image" src={data.imageUrl} />
+
+      <p>{data.title}</p>
+    </div>
+  );
 }

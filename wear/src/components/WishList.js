@@ -7,6 +7,7 @@ import "../styles/wishList.css";
 // material-ui
 import { Button } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { render } from "@testing-library/react";
 
 function WishList() {
   // variable for storing all users current wishlist items
@@ -30,6 +31,7 @@ function WishList() {
         }
       });
 
+    console.log(usersWishList);
     return getData;
   }, [usersWishList]);
 
@@ -42,13 +44,11 @@ function WishList() {
         </Link>
       </div>
       <div className="wishList__body">
-        {/* {usersWishList.map(({ id, post }) => {
-          return post.map((id) => <WishListItem id={id} />);
-        })} */}
-
-        {usersWishList.map((itemid) => (
-          <WishListItem id={itemid} />
-        ))}
+        {usersWishList.length <= 0 ? (
+          <h2>No items in your list</h2>
+        ) : (
+          usersWishList.map((itemid) => <WishListItem id={itemid} />)
+        )}
       </div>
     </div>
   );
