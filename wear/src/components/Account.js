@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 // import from context
 import { useAuth } from "../context/AuthContext";
 
@@ -60,7 +61,9 @@ function Account() {
         {/* users dectiption */}
         <h5>{description}</h5>
         <Button>
+          <Link to="/editAccount">
           <SettingsIcon />
+          </Link>
         </Button>
       </div>
       <hr></hr>

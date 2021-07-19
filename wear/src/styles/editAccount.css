@@ -1,0 +1,12 @@
+.editAccount {
+  /* size */
+  width: 800px;
+  height: 500px;
+
+  /* spacing */
+  margin: 0 auto;
+  text-align: center;
+
+  /* color */
+  background-color: antiquewhite;
+}
