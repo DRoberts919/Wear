@@ -81,6 +81,7 @@ function UserPost() {
               price: price,
               username: displayname,
               userId: userId,
+              userImg:currentUser.photoURL
             });
             setProgress(0);
             setImage(null);

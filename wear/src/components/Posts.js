@@ -11,7 +11,15 @@ import StarIcon from "@material-ui/icons/Star";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 
-function Post({ username, caption, imageUrl, price, postId, title }) {
+function Post({
+  username,
+  caption,
+  imageUrl,
+  price,
+  postId,
+  title,
+  userPhoto,
+}) {
   const { currentUser } = useAuth();
 
   // fucntion to add this post to a users wishlist.
@@ -55,7 +63,11 @@ function Post({ username, caption, imageUrl, price, postId, title }) {
   return (
     <div className="post">
       <div className="post__header">
-        <Avatar className="post__avatar" alt={username} src="" />
+        <Avatar
+          className="post__avatar"
+          alt={username}
+          src={userPhoto}
+        />
         <h3>{username}</h3>
       </div>
       {/* image */}

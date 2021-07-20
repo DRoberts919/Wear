@@ -55,14 +55,14 @@ function Account() {
               the user header has a description, avatar icon, and name! */}
       <div className="account__header">
         {/* users image */}
-        <Avatar alt="currentUser" src={currentUser.photoUrl}></Avatar>
+        <Avatar alt="currentUser" src={currentUser.photoURL}></Avatar>
         {/* users display name */}
         <h1 className="account__userName">{currentUser.displayName}</h1>
         {/* users dectiption */}
         <h5>{description}</h5>
         <Button>
           <Link to="/editAccount">
-          <SettingsIcon />
+            <SettingsIcon />
           </Link>
         </Button>
       </div>
@@ -79,7 +79,7 @@ function Account() {
 export default Account;
 
 function UserImg({ data }) {
-  console.log(data);
+  
 
   return (
     <div className="userImg">

@@ -1,20 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { db, storage } from "../firebase";
 import "../styles/editAccount.css";
+import { useHistory } from "react-router";
+
+// maaterial-ui
+import { Button } from "@material-ui/core";
 
 function EditAccount() {
-  const [userName, setUsername] = useState("");
-  const [userImg, setUserImg] = useState(null);
-  const [description, setDescription] = useState("");
   const { currentUser } = useAuth();
+  const [userName, setUsername] = useState(currentUser.displayName);
+  const [userImg, setUserImg] = useState();
+  const [description, setDescription] = useState("");
+  const history = useHistory();
 
-  console.log(currentUser);
+  const setImage = (e) => {
+    if (e.target.value[0]) {
+      console.log(e.target.files[0]);
+      setUserImg(e.target.files[0]);
+      console.log(userImg);
+    }
+  };
 
   const updateProfile = (evt) => {
     evt.preventDefault();
+
     const uploadTask = storage
-      .ref(`profile-picture/${userImg.image}`)
+      .ref(`profile-picture/${userImg.name}`)
       .put(userImg);
 
     uploadTask.on(
@@ -30,23 +42,29 @@ function EditAccount() {
           .child(userImg.name)
           .getDownloadURL()
           .then((url) => {
+            console.log(url);
             currentUser.updateProfile({
               displayName: userName,
-              photoUrl: url,
+              photoURL: url,
             });
+          })
+          .then(() => {
+            db.collection("userCollection")
+              .where("uid", "==", currentUser.uid)
+              .get()
+              .then((queryData) => {
+                queryData.forEach((doc) => {
+                  db.collection("userCollection").doc(doc.id).update({
+                    description: description,
+                  });
+                });
+              });
+
+            history.push("/account");
           });
       }
     );
   };
-
-  db.collection("userCollection")
-    .get()
-    .then((queryData) => {
-      console.log(queryData);
-      queryData.forEach((collection) => {
-        console.log(collection.data());
-      });
-    });
 
   return (
     <div className="editAccount">
@@ -70,10 +88,9 @@ function EditAccount() {
         />
 
         <h3>Profile Image</h3>
-        <input
-          type="file"
-          onChange={(e) => setUserImg(e.target.files[0])}
-        ></input>
+        <input type="file" onChange={setImage}></input>
+
+        <Button type="submit">Submit</Button>
       </form>
     </div>
   );

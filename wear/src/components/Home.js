@@ -4,8 +4,6 @@ import "../styles/home.css";
 import Post from "../components/Posts";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
-import logo from "../images/w-logo.png";
-
 import { db } from "../firebase";
 
 // material-ui Imports
@@ -44,6 +42,7 @@ function Home() {
             imageUrl={post.imageUrl}
             price={post.price}
             postId={id}
+            userPhoto={post.userImg}
           />
         ))}
       </div>
@@ -64,7 +63,11 @@ function UserNav() {
   return (
     <div className="UserNav">
       <div className="userNav__header">
-        <Avatar src={logo} alt={currentUser.displayName} sizes="large" />
+        <Avatar
+          src={currentUser.photoURL}
+          alt={currentUser.displayName}
+          sizes="large"
+        />
         <h1>{currentUser.displayName}</h1>
       </div>
 
