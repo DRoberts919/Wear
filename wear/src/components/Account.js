@@ -65,6 +65,9 @@ function Account() {
             <SettingsIcon />
           </Link>
         </Button>
+        <Link to="/home">
+          <Button>Home</Button>
+        </Link>
       </div>
       <hr></hr>
       <div className="account__posts">
@@ -79,8 +82,6 @@ function Account() {
 export default Account;
 
 function UserImg({ data }) {
-  
-
   return (
     <div className="userImg">
       <img className="userImg__image" src={data.imageUrl} />

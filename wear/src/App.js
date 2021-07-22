@@ -23,6 +23,7 @@ import WishList from "./components/WishList";
 import UserPost from "./components/UserPost";
 import PrivateRoute from "./components/PrivateRoute";
 import EditAccount from "./components/EditAccount";
+import LandingPage from "./components/LandingPage";
 
 // helper fucntions
 
@@ -57,6 +58,7 @@ function App() {
           )}
         </div>
         <Switch>
+          <Route exact path="/" component={LandingPage}/>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <PrivateRoute exact path="/home" component={Home} />
