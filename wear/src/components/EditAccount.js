@@ -196,6 +196,17 @@ function EditAccount() {
               displayName: userName,
               photoURL: url,
             });
+
+            db.collection("posts")
+              .where("userId", "==", currentUser.uid)
+              .get()
+              .then((queryData) => {
+                queryData.forEach((doc) => {
+                  db.collection("posts").doc(doc.id).update({
+                    userImg: url,
+                  });
+                });
+              });
           })
           .then(() => {
             db.collection("userCollection")
@@ -219,16 +230,6 @@ function EditAccount() {
                 queryData.forEach((doc) => {
                   db.collection("posts").doc(doc.id).update({
                     username: userName,
-                  });
-                });
-              });
-            db.collection("posts")
-              .where("userId", "==", currentUser.uid)
-              .get()
-              .then((queryData) => {
-                queryData.forEach((doc) => {
-                  db.collection("posts").doc(doc.id).update({
-                    userImg: url,
                   });
                 });
               });

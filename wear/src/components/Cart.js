@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { db, firebase } from "../firebase";
@@ -8,9 +9,15 @@ import "../styles/cart.css";
 import { Button } from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
+// paypal
+const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
+
 function Cart() {
   const [usersCart, setUsersCart] = useState([]);
+  const [total, setTotal] = useState("0");
   const { currentUser } = useAuth();
+
+  console.log("carts");
 
   //   useEffect to get all data from the users cart!
   useEffect(() => {
@@ -29,13 +36,49 @@ function Cart() {
     return getCartData;
   }, [currentUser, usersCart]);
 
+  // paypal funcitons
+  const onApprove = (data, actions) => {
+    usersCart.map((id) => {
+      db.collection("posts")
+        .doc(id)
+        .get()
+        .then((doc) => {
+          console.log(doc.data().price);
+          setTotal(total + doc.data().price);
+        });
+    });
+
+    console.log("total");
+    return actions.order.capture();
+  };
+
+  const createOrder = (data, actions) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: "0.01",
+          },
+        },
+      ],
+    });
+  };
+
+  const test = () => {};
+
   return (
-    <div className="cart">
+    <div className="cart" onClick={test}>
       <div className="cart__header">
         <h1>Cart</h1>
         <Link to="/home">
           <Button>Home</Button>
         </Link>
+      </div>
+      <div className="cart__paypal">
+        <PayPalButton
+          createOrder={(data, actions) => createOrder(data, actions)}
+          onApprove={(data, actions) => onApprove(data, actions)}
+        />
       </div>
 
       <div className="cart__body">
