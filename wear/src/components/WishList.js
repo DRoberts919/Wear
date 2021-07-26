@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { db, firebase } from "../firebase";
 import "../styles/wishList.css";
@@ -7,7 +7,6 @@ import "../styles/wishList.css";
 // material-ui
 import { Button } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import { render } from "@testing-library/react";
 
 function WishList() {
   // variable for storing all users current wishlist items
@@ -33,7 +32,7 @@ function WishList() {
 
     console.log(usersWishList);
     return getData;
-  }, [usersWishList]);
+  }, [usersWishList, currentUser]);
 
   return (
     <div className="wishList">

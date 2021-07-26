@@ -9,14 +9,29 @@ import "../styles/cart.css";
 import { Button } from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
-// paypal
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
 function Cart() {
-  const [usersCart, setUsersCart] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [adder, setAdder] = useState(0);
   const { currentUser } = useAuth();
+  const [usersCart, setUsersCart] = useState([]);
+  const [total, setTotal] = useState();
+  const [paidFor, setPaidFor] = useState(false);
+
+  // useEffect for paypal sdk and injecting scripts
+  useEffect(() => {
+    var prices = [];
+
+    usersCart.map((id) => {
+      db.collection("posts")
+        .doc(id)
+        .get()
+        .then((doc) => {
+          prices.push(Number(doc.data().price));
+
+          setTotal(() => addPrices(prices));
+        });
+    });
+  }, [usersCart]);
 
   //   useEffect to get all data from the users cart!
   useEffect(() => {
@@ -33,66 +48,71 @@ function Cart() {
       });
 
     return getCartData;
-  }, [currentUser, usersCart]);
+  }, [currentUser, usersCart, paidFor]);
+  // method to add all prices up
+  const addPrices = (prices) => {
+    // takes in an array of numbers and
+    var total = 0;
 
-  // paypal funcitons
-  const onApprove = (data, actions) => {
-    return actions.order.capture();
+    for (let i = 0; i < prices.length; i++) {
+      total += prices[i];
+    }
+
+    return total;
   };
 
   const createOrder = (data, actions) => {
-    var prices = [];
-    var test;
-
-    usersCart
-      .map((id) => {
-        db.collection("posts")
-          .doc(id)
-          .get()
-          .then((doc) => {
-            prices.push(Number(doc.data().price));
-          });
-      })
-      .then(
-        prices.forEach((price) => {
-          test = 0 + price;
-          console.log(test);
-        })
-      );
-
+    console.log(total);
     return actions.order.create({
       purchase_units: [
         {
           amount: {
-            value: `13`,
+            value: total,
           },
         },
       ],
     });
   };
 
-  const test = () => {};
+  const onApprove = (data, actions) => {
+    const order = actions.order.capture();
 
+    db.collection("ShoppingCart").doc(currentUser.uid).update({
+      cart: firebase.firestore.FieldValue.delete(),
+    });
+
+    setPaidFor(true);
+    console.log(order);
+  };
   return (
-    <div className="cart" onClick={test}>
+    <div className="cart">
       <div className="cart__header">
         <h1>Cart</h1>
         <Link to="/home">
           <Button>Home</Button>
         </Link>
       </div>
-      <div className="cart__paypal">
-        <PayPalButton
-          createOrder={(data, actions) => createOrder(data, actions)}
-          onApprove={(data, actions) => onApprove(data, actions)}
-        />
-      </div>
-
-      <div className="cart__body">
-        {usersCart.map((itemId) => (
-          <CartItem id={itemId} />
-        ))}
-      </div>
+      {paidFor ? (
+        <div>
+          <h1>Congrats, you just bought some great stuff!</h1>
+        </div>
+      ) : (
+        <div className="cart__body">
+          <div className="cart__items">
+            {usersCart == null || usersCart.length <= 0 ? (
+              <h2>no Items in your cart</h2>
+            ) : (
+              usersCart.map((itemId) => <CartItem id={itemId} />)
+            )}
+          </div>
+          <div className="cart__paypal" id="cart__paypal">
+            <PayPalButton
+              createOrder={(data, actions) => createOrder(data, actions)}
+              onApprove={(data, actions) => onApprove(data, actions)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

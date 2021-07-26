@@ -46,8 +46,8 @@ function Account() {
         setUsersImg(postList);
       });
 
-    return getDescription, getPosts;
-  }, []);
+    return (getDescription, getPosts);
+  }, [currentUser]);
 
   return (
     <div className="account">
@@ -84,7 +84,7 @@ export default Account;
 function UserImg({ data }) {
   return (
     <div className="userImg">
-      <img className="userImg__image" src={data.imageUrl} />
+      <img className="userImg__image" src={data.imageUrl} alt="usersImg"/>
 
       <p>{data.title}</p>
     </div>
