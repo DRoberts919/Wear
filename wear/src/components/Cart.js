@@ -14,10 +14,9 @@ const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
 function Cart() {
   const [usersCart, setUsersCart] = useState([]);
-  const [total, setTotal] = useState("0");
+  const [total, setTotal] = useState(0);
+  const [adder, setAdder] = useState(0);
   const { currentUser } = useAuth();
-
-  console.log("carts");
 
   //   useEffect to get all data from the users cart!
   useEffect(() => {
@@ -38,26 +37,34 @@ function Cart() {
 
   // paypal funcitons
   const onApprove = (data, actions) => {
-    usersCart.map((id) => {
-      db.collection("posts")
-        .doc(id)
-        .get()
-        .then((doc) => {
-          console.log(doc.data().price);
-          setTotal(total + doc.data().price);
-        });
-    });
-
-    console.log("total");
     return actions.order.capture();
   };
 
   const createOrder = (data, actions) => {
+    var prices = [];
+    var test;
+
+    usersCart
+      .map((id) => {
+        db.collection("posts")
+          .doc(id)
+          .get()
+          .then((doc) => {
+            prices.push(Number(doc.data().price));
+          });
+      })
+      .then(
+        prices.forEach((price) => {
+          test = 0 + price;
+          console.log(test);
+        })
+      );
+
     return actions.order.create({
       purchase_units: [
         {
           amount: {
-            value: "0.01",
+            value: `13`,
           },
         },
       ],
