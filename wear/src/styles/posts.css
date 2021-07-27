@@ -1,7 +1,7 @@
 .post {
   max-width: 900px;
   width: 800px;
-  background-color: white;
+  background-color: #f9f8f8;
   border: 1px solid lightgray;
   margin-bottom: 45px;
   margin-left: 25%;
@@ -23,6 +23,7 @@
 .post__text {
   font-weight: normal;
   padding: 20px;
+  margin-top: 14px;
 }
 
 .post__header {
@@ -42,4 +43,15 @@
 .post__dataBox {
   display: flex;
   flex-direction: row;
+}
+
+.post__data {
+  display: flex;
+  flex-direction: column;
+}
+
+.post__moneyData {
+  display: inherit;
+
+  margin-left: 15px;
 }

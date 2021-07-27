@@ -79,6 +79,7 @@ function EditAccount() {
               .where("userId", "==", currentUser.uid)
               .get()
               .then((queryData) => {
+                console.log("updating user photo");
                 queryData.forEach((doc) => {
                   db.collection("posts").doc(doc.id).update({
                     userImg: url,

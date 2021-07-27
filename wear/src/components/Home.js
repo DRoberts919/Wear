@@ -77,8 +77,8 @@ function UserNav() {
         <Button>
           <Link className="link" to={`/account`}>
             <div className="userNav__button userNav__myAcount">
+              <PersonIcon className="userNav__icon" />
               <p>My Account</p>
-              <PersonIcon />
             </div>
           </Link>
         </Button>
@@ -86,24 +86,24 @@ function UserNav() {
         <Button>
           <Link className="link" to={`/wishList`}>
             <div className="userNav__button userNav__wishList">
+              <StarIcon className="userNav__icon" />
               <p>Wish List</p>
-              <StarIcon />
             </div>
           </Link>
         </Button>
         <Button>
           <Link to={`/cart`} className="link">
             <div className="userNav__button userNav__Cart">
+              <ShoppingCartIcon className="userNav__icon" />
               <p>Cart</p>
-              <ShoppingCartIcon />
             </div>
           </Link>
         </Button>
         <Button>
           <Link to={`/post`} className="link">
             <div className="userNav__button userNav__Post">
+              <AddIcon className="userNav__icon" />
               <p>Post</p>
-              <AddIcon />
             </div>
           </Link>
         </Button>

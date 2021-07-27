@@ -38,14 +38,22 @@ function App() {
             <img alt="" className="app__logo" src={logo} />
           </Link>
           {currentUser ? (
-            <Button
-              onClick={() => {
-                auth.signOut();
-                console.log("user signed out");
-              }}
-            >
-              Log out
-            </Button>
+            <div className="app__headerButtons">
+              <Link to="/home">
+                <Button>Home</Button>
+              </Link>
+              <Link to="/account">
+                <Button>account</Button>
+              </Link>
+              <Button
+                onClick={() => {
+                  auth.signOut();
+                  console.log("user signed out");
+                }}
+              >
+                Log out
+              </Button>
+            </div>
           ) : (
             <div className="app__authButtons">
               <Link to="/login">
@@ -58,7 +66,7 @@ function App() {
           )}
         </div>
         <Switch>
-          <Route exact path="/" component={LandingPage}/>
+          <Route exact path="/" component={LandingPage} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <PrivateRoute exact path="/home" component={Home} />

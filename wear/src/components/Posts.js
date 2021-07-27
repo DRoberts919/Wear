@@ -63,29 +63,30 @@ function Post({
   return (
     <div className="post">
       <div className="post__header">
-        <Avatar
-          className="post__avatar"
-          alt={username}
-          src={userPhoto}
-        />
+        <Avatar className="post__avatar" alt={username} src={userPhoto} />
         <h3>{username}</h3>
       </div>
       {/* image */}
       <div className="post__dataBox">
         <img className="post__image" src={imageUrl} alt="" />
-        <h4>{title}</h4>
-        {/* username caption and price */}
-        <h4 className="post__text">
-          <strong>{username}:</strong> {caption}
+        <div className="post__data">
+          <h4>{title}</h4>
+          {/* username caption and price */}
+          <h4 className="post__text">
+            <strong>{username}:</strong> {caption}
+          </h4>
+          <div className="post__moneyData">
+
           <AttachMoneyIcon />: {price}
-        </h4>
-        <div className="post__buttons">
-          <Button onClick={addTowishList}>
-            <StarIcon style={{ color: "yellow" }} />
-          </Button>
-          <Button onClick={addToShoppingCart}>
-            <ShoppingCartIcon />
-          </Button>
+          </div>
+          <div className="post__buttons">
+            <Button onClick={addTowishList}>
+              <StarIcon style={{ color: "yellow" }} />
+            </Button>
+            <Button onClick={addToShoppingCart}>
+              <ShoppingCartIcon />
+            </Button>
+          </div>
         </div>
       </div>
     </div>

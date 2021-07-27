@@ -35,11 +35,33 @@
 }
 
 .userNav__button {
+  justify-content: space-between;
   height: 40px;
+  display: flex;
+  flex-direction: row;
+}
+
+.userNav__button:hover > .userNav__icon {
+  transition: color .3s ease-out;
+  color: #53dd6c;
+}
+
+.userNav__button p {
+  font-size: large;
 }
 
 .link {
   text-decoration: none;
   text-decoration-color: none;
   color: black;
+
+  display: flex;
+}
+
+.userNav__icon {
+  margin-right: 12px;
+}
+
+.userNav__icon:hover {
+  color: #53dd6c;
 }
