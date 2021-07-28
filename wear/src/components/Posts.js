@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import { useAuth } from "../context/AuthContext";
 import { db, firebase } from "../firebase";
@@ -20,6 +20,8 @@ function Post({
   title,
   userPhoto,
 }) {
+  const [sizeSelected,setSizeSelected] = useState(false);
+  const [selectedSize,setSlectedSize] = useState("");
   const { currentUser } = useAuth();
 
   // fucntion to add this post to a users wishlist.
@@ -79,11 +81,27 @@ function Post({
 
           <AttachMoneyIcon />: {price}
           </div>
-          <div className="post__buttons">
-            <Button onClick={addTowishList}>
+          <div className="post__sizes">
+            <h5 className="post__sizesTitle">Select Size</h5>
+            <div className="post__sizeContainer">
+                <div className="post__sizeOption">
+                  <h6>Small</h6>
+                </div>
+                <div className="post__sizeOption">
+                  <h6>Medium</h6>
+                </div>
+                <div className="post__sizeOption">
+                  <h6>Large</h6>
+                </div><div className="post__sizeOption">
+                  <h6>Xlarge</h6>
+                </div>
+            </div>
+          </div>
+          <div className="post__buttons"  >
+            <Button onClick={addTowishList} style={selectedSize ?{pointerEvents:"none"}:{pointerEvents:"all"}}>
               <StarIcon style={{ color: "yellow" }} />
             </Button>
-            <Button onClick={addToShoppingCart}>
+            <Button onClick={addToShoppingCart} style={selectedSize ?{pointerEvents:"none"}:{pointerEvents:"all"}}>
               <ShoppingCartIcon />
             </Button>
           </div>

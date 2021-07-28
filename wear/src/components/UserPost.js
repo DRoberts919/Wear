@@ -5,7 +5,11 @@ import Button from "@material-ui/core/Button";
 import { useAuth } from "../context/AuthContext";
 import { useHistory } from "react-router-dom";
 
+// css import
 import "../styles/userPost.css";
+
+// material-ui
+import { TextField } from "@material-ui/core";
 
 function UserPost() {
   const [caption, setCaption] = useState("");
@@ -17,6 +21,10 @@ function UserPost() {
   const [title, setTitle] = useState("");
   const [userId, setUserId] = useState("");
   const [displayname, setDisplayname] = useState("");
+  const [smallAmount, setSmallAmount] = useState(0);
+  const [mediumAmount, setMediumAmount] = useState(0);
+  const [largeAmount, setLargeAmount] = useState(0);
+  const [xlargeAmount, setXlargeAmount] = useState(0);
   const { currentUser } = useAuth();
   const history = useHistory();
 
@@ -26,21 +34,7 @@ function UserPost() {
     setDisplayname(currentUser.displayName);
   }, [currentUser]);
 
-  // helper function to set style
-  const changeStyle = (e) => {
-    console.log(e.target.value);
-    setStyle(e.target.value);
-  };
-
-  // helper function to set Color
-
-  const changeColor = (e) => {
-    console.log(e.target.value);
-    setColor(e.target.value);
-  };
-
   //   helper funciton for setting image url
-
   const changeImage = (e) => {
     if (e.target.value[0]) {
       setImage(e.target.files[0]);
@@ -48,10 +42,11 @@ function UserPost() {
   };
 
   //   function to upload image to firebase storage and database
-
   const handleUpload = () => {
+    // access the firebase storage and add the photo to it
     const uploadTask = storage.ref(`image/${image.name}`).put(image);
 
+    // on upload of image this activates
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -73,22 +68,38 @@ function UserPost() {
           .getDownloadURL()
           .then((url) => {
             // post image to DB
-            db.collection("posts").add({
-              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-              caption: caption,
-              title: title,
-              imageUrl: url,
-              price: price,
-              username: displayname,
-              userId: userId,
-              userImg:currentUser.photoURL
-            });
+            db.collection("posts")
+              .add({
+                userId: userId,
+                username: displayname,
+                caption: caption,
+                title: title,
+                imageUrl: url,
+                userImg: currentUser.photoURL,
+                price: price,
+                sizes: {
+                  smallAmount: smallAmount,
+                  mediumAmount: mediumAmount,
+                  largeAmount: largeAmount,
+                  xlargeAmount: xlargeAmount,
+                },
+                color: color,
+                style: style,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+              })
+              .catch((error) => {
+                alert(error);
+              });
             setProgress(0);
             setImage(null);
             setCaption("");
             setPrice(0);
             setColor("");
             setStyle("");
+            setSmallAmount(0);
+            setMediumAmount(0);
+            setLargeAmount(0);
+            setXlargeAmount(0);
             history.push("/home");
           });
       }
@@ -127,7 +138,11 @@ function UserPost() {
         />
 
         <h3>Styles</h3>
-        <select value={style} name="selectList" onChange={changeStyle}>
+        <select
+          value={style}
+          name="selectList"
+          onChange={(e) => setStyle(e.target.value)}
+        >
           {/* shirts and others */}  <option value="Shirt">Shirt</option>
           <option value="Long Sleeve">Long Sleeve</option>
           <option value="Sweater">Sweater</option>
@@ -145,7 +160,11 @@ function UserPost() {
         </select>
 
         <h3>Color</h3>
-        <select value={color} name="selectList" onChange={changeColor}>
+        <select
+          value={color}
+          name="selectList"
+          onChange={(e) => setColor(e.target.value)}
+        >
           {/* shirts and others */}  <option value="Black">Black</option>
           <option value="White">White</option>
           <option value="Grey">Grey</option>
@@ -158,11 +177,34 @@ function UserPost() {
           <option value="Purple">Purple</option>
           <option value="Pink">Pink</option>
         </select>
-        <progress value={progress} max="100" />
 
-        <Button className="imageUpload__button" onClick={handleUpload}>
-          Upload
-        </Button>
+        <div className="userPost__sizes">
+          <h5>How many sizes will you have of this item?</h5>
+          <TextField
+            label="Small"
+            onChange={(e) => setSmallAmount(e.target.value)}
+          />
+          <TextField
+            label="Medium"
+            onChange={(e) => setMediumAmount(e.target.value)}
+          />
+          <TextField
+            label="Large"
+            onChange={(e) => setLargeAmount(e.target.value)}
+          />
+          <TextField
+            label="XLarge"
+            onChange={(e) => setXlargeAmount(e.target.value)}
+          />
+        </div>
+
+        <>
+          <progress value={progress} max="100" />
+
+          <Button className="imageUpload__button" onClick={handleUpload}>
+            Upload
+          </Button>
+        </>
       </form>
     </div>
   );

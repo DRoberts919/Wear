@@ -2,7 +2,7 @@
 
 .account {
   /* size */
-  width: 50%;
+  width: 1000px;
   min-height: 300px;
 
   /* spacing */
@@ -12,19 +12,31 @@
   background-color: #f9f8f8;
 }
 
+/* apostContainer */
+
+.account__posts {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-left: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 /* userImg */
 
 .userImg {
   /* size */
-  width: 50px;
-  max-width: 100px;
-  height: 150px;
-  background-color: white;
-  margin-bottom: 45px;
+  min-width: 290px;
+  min-height: 290px;
+  max-width: 290px;
+  max-height: 290px;
+  margin: 4px;
 }
 
 .userImg__image {
-  width: 100%;
-  max-width: 75px;
   object-fit: contain;
+  width: fit-content;
+  max-width: 290px;
+  max-height: 290px;
 }

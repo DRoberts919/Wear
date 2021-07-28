@@ -25,29 +25,33 @@ function EditAccount() {
   const updateProfile = (evt) => {
     evt.preventDefault();
 
-    if (userName !== "" && userImg !== null && description !== "") {
-      // if user chooses to update all data
-      updateAllData();
-    } else if (userImg == null && description === "") {
-      // if no data provided for userImg or description user updates only username
-      updateUsername();
-    } else if (description !== "") {
-      // update the description only
-      updateDescription();
-    } else if (userImg !== null) {
-      // update user profile
-      updatePhoto();
-    } else if (userImg !== null && description === "") {
-      // update image and description
-      updatePhoto();
-      updateDescription();
-    } else if (description !== "" && userName !== "") {
-      // update description and name
-      updateDescription();
-      updateUsername();
-    } else if (userImg !== null && userName !== "") {
-      // user updates both username and photo
-      updatePhotoAndUsername();
+    try {
+      if (userName !== "" && userImg !== null && description !== "") {
+        // if user chooses to update all data
+        updateAllData();
+      } else if (userImg == null && description === "") {
+        // if no data provided for userImg or description user updates only username
+        updateUsername();
+      } else if (description !== "") {
+        // update the description only
+        updateDescription();
+      } else if (userImg !== null) {
+        // update user profile
+        updatePhoto();
+      } else if (userImg !== null && description === "") {
+        // update image and description
+        updatePhoto();
+        updateDescription();
+      } else if (description !== "" && userName !== "") {
+        // update description and name
+        updateDescription();
+        updateUsername();
+      } else if (userImg !== null && userName !== "") {
+        // user updates both username and photo
+        updatePhotoAndUsername();
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
