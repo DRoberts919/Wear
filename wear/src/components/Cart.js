@@ -17,22 +17,6 @@ function Cart() {
   const [total, setTotal] = useState();
   const [paidFor, setPaidFor] = useState(false);
 
-  // useEffect for paypal sdk and injecting scripts
-  useEffect(() => {
-    var prices = [];
-
-    usersCart.map((id) => {
-      db.collection("posts")
-        .doc(id)
-        .get()
-        .then((doc) => {
-          prices.push(Number(doc.data().price));
-
-          setTotal(() => addPrices(prices));
-        });
-    });
-  }, [usersCart]);
-
   //   useEffect to get all data from the users cart!
   useEffect(() => {
     const getCartData = db
@@ -49,6 +33,29 @@ function Cart() {
 
     return getCartData;
   }, [currentUser, usersCart, paidFor]);
+
+  // useEffect for paypal sdk and injecting scripts
+  useEffect(() => {
+    var prices = [];
+
+    console.log(usersCart);
+
+    if (usersCart == null) {
+      console.log("no items in list");
+    } else {
+      usersCart.map((id) => {
+        db.collection("posts")
+          .doc(id)
+          .get()
+          .then((doc) => {
+            prices.push(Number(doc.data().price));
+
+            setTotal(() => addPrices(prices));
+          });
+      });
+    }
+  }, [paidFor, usersCart]);
+
   // method to add all prices up
   const addPrices = (prices) => {
     // takes in an array of numbers and

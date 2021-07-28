@@ -32,36 +32,55 @@
 .userNav__buttonContainer {
   display: flex;
   flex-direction: column;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .userNav__button {
-  justify-content: space-between;
-  height: 40px;
+  /* size */
+  height: 60px;
+  width: 100%;
+
+  /* spacing */
+  padding-top: 5px;
+
+  /* display orientation */
   display: flex;
   flex-direction: row;
 }
 
 .userNav__button:hover > .userNav__icon {
-  transition: color .3s ease-out;
+  transition: color 0.3s ease-out;
   color: #53dd6c;
 }
 
 .userNav__button p {
-  font-size: large;
+  font-weight: bold;
+  font-size: 30px;
 }
 
 .link {
+  /* styling */
   text-decoration: none;
   text-decoration-color: none;
   color: black;
 
+  /* border */
+  border: 1px solid #f9f8f8;
+  border-radius: 18px;
+
+  /* spacing */
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+  /* orientation */
   display: flex;
+}
+.link:hover {
+  transition: border-color 0.4s ease-out;
+  border-color: #53dd6c;
 }
 
 .userNav__icon {
   margin-right: 12px;
-}
-
-.userNav__icon:hover {
-  color: #53dd6c;
 }

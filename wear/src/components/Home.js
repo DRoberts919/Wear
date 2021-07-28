@@ -74,39 +74,36 @@ function UserNav() {
       <hr />
 
       <div className="userNav__buttonContainer">
-        <Button>
-          <Link className="link" to={`/account`}>
-            <div className="userNav__button userNav__myAcount">
-              <PersonIcon className="userNav__icon" />
-              <p>My Account</p>
-            </div>
-          </Link>
-        </Button>
+        <Link className="link userNav__button" to={`/account`}>
+          <div className="userNav__button userNav__myAcount">
+            <PersonIcon style={{ fontSize: 35 }} className="userNav__icon" />
+            <p>My Account</p>
+          </div>
+        </Link>
 
-        <Button>
-          <Link className="link" to={`/wishList`}>
-            <div className="userNav__button userNav__wishList">
-              <StarIcon className="userNav__icon" />
-              <p>Wish List</p>
-            </div>
-          </Link>
-        </Button>
-        <Button>
-          <Link to={`/cart`} className="link">
-            <div className="userNav__button userNav__Cart">
-              <ShoppingCartIcon className="userNav__icon" />
-              <p>Cart</p>
-            </div>
-          </Link>
-        </Button>
-        <Button>
-          <Link to={`/post`} className="link">
-            <div className="userNav__button userNav__Post">
-              <AddIcon className="userNav__icon" />
-              <p>Post</p>
-            </div>
-          </Link>
-        </Button>
+        <Link className="link userNav__button" to={`/wishList`}>
+          <div className="userNav__button userNav__wishList">
+            <StarIcon style={{ fontSize: 35 }} className="userNav__icon" />
+            <p>Wish List</p>
+          </div>
+        </Link>
+
+        <Link to={`/cart`} className="link userNav__button">
+          <div className="userNav__button">
+            <ShoppingCartIcon
+              style={{ fontSize: 35 }}
+              className="userNav__icon"
+            />
+            <p>Cart</p>
+          </div>
+        </Link>
+
+        <Link to={`/post`} className="link userNav__button">
+          <div className="userNav__button ">
+            <AddIcon style={{ fontSize: 35 }} className="userNav__icon" />
+            <p>Post</p>
+          </div>
+        </Link>
       </div>
     </div>
   );
