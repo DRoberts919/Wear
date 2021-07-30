@@ -20,24 +20,28 @@ function Post({
   title,
   userPhoto,
 }) {
-  const [sizeSelected,setSizeSelected] = useState(false);
-  const [selectedSize,setSlectedSize] = useState("");
+  const [sizeSelected, setSizeSelected] = useState(false);
+  const [selectedSize, setSelectedSize] = useState("");
   const { currentUser } = useAuth();
 
   // fucntion to add this post to a users wishlist.
   const addTowishList = () => {
     var docRef = db.collection("WishList").doc(currentUser.uid);
+    var wishItem = {
+      id: postId,
+      size: selectedSize,
+    };
 
     docRef.get().then((doc) => {
       if (doc.exists) {
         console.log("document exists");
         docRef.update({
-          postList: firebase.firestore.FieldValue.arrayUnion(postId),
+          postList: firebase.firestore.FieldValue.arrayUnion(wishItem),
         });
       } else {
         console.log("document does not exists creating now");
         docRef.set({
-          postList: [postId],
+          postList: [wishItem],
         });
       }
     });
@@ -47,16 +51,21 @@ function Post({
   const addToShoppingCart = () => {
     var docRef = db.collection("ShoppingCart").doc(currentUser.uid);
 
+    var cartItem = {
+      id: postId,
+      size: selectedSize,
+    };
+
     docRef.get().then((doc) => {
-      if (doc.exists) {
+      if (doc.exists && selectedSize != "") {
         console.log("document Exists");
         docRef.update({
-          cart: firebase.firestore.FieldValue.arrayUnion(postId),
+          cart: firebase.firestore.FieldValue.arrayUnion(cartItem),
         });
       } else {
         console.log("document does not exists for thsi user creating now...");
         docRef.set({
-          cart: [postId],
+          cart: [cartItem],
         });
       }
     });
@@ -78,30 +87,68 @@ function Post({
             <strong>{username}:</strong> {caption}
           </h4>
           <div className="post__moneyData">
-
-          <AttachMoneyIcon />: {price}
+            <AttachMoneyIcon />: {price}
           </div>
           <div className="post__sizes">
             <h5 className="post__sizesTitle">Select Size</h5>
             <div className="post__sizeContainer">
-                <div className="post__sizeOption">
-                  <h6>Small</h6>
-                </div>
-                <div className="post__sizeOption">
-                  <h6>Medium</h6>
-                </div>
-                <div className="post__sizeOption">
-                  <h6>Large</h6>
-                </div><div className="post__sizeOption">
-                  <h6>Xlarge</h6>
-                </div>
+              <div
+                className="post__sizeOption"
+                onClick={() => {
+                  setSelectedSize("Small");
+                  setSizeSelected(true);
+                }}
+              >
+                <h6>Small</h6>
+              </div>
+              <div
+                className="post__sizeOption"
+                onClick={() => {
+                  setSelectedSize("Medium");
+                  setSizeSelected(true);
+                }}
+              >
+                <h6>Medium</h6>
+              </div>
+              <div
+                className="post__sizeOption"
+                onClick={() => {
+                  setSelectedSize("Large");
+                  setSizeSelected(true);
+                }}
+              >
+                <h6>Large</h6>
+              </div>
+              <div
+                className="post__sizeOption"
+                onClick={() => {
+                  setSelectedSize("XL");
+                  setSizeSelected(true);
+                }}
+              >
+                <h6>Xlarge</h6>
+              </div>
             </div>
           </div>
-          <div className="post__buttons"  >
-            <Button onClick={addTowishList} style={selectedSize ?{pointerEvents:"none"}:{pointerEvents:"all"}}>
+          <div className="post__buttons">
+            <Button
+              onClick={addTowishList}
+              style={
+                sizeSelected
+                  ? { pointerEvents: "all" }
+                  : { pointerEvents: "none" }
+              }
+            >
               <StarIcon style={{ color: "yellow" }} />
             </Button>
-            <Button onClick={addToShoppingCart} style={selectedSize ?{pointerEvents:"none"}:{pointerEvents:"all"}}>
+            <Button
+              onClick={addToShoppingCart}
+              style={
+                sizeSelected
+                  ? { pointerEvents: "all" }
+                  : { pointerEvents: "none" }
+              }
+            >
               <ShoppingCartIcon />
             </Button>
           </div>

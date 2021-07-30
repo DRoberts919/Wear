@@ -38,16 +38,15 @@ function Cart() {
   useEffect(() => {
     var prices = [];
 
-    console.log(usersCart);
-
     if (usersCart == null) {
       console.log("no items in list");
     } else {
-      usersCart.map((id) => {
+      usersCart.map((cartItem) => {
         db.collection("posts")
-          .doc(id)
+          .doc(cartItem.id)
           .get()
           .then((doc) => {
+            // console.log(doc.data().sizes);
             prices.push(Number(doc.data().price));
 
             setTotal(() => addPrices(prices));
@@ -55,6 +54,29 @@ function Cart() {
       });
     }
   }, [paidFor, usersCart]);
+
+  const removeSizeItemCounter = () => {
+    usersCart.forEach((item) => {
+      var docRef = db.collection("posts").doc(item.id);
+      if (item.size === "Small") {
+        docRef.update({
+          "sizes.smallAmount": firebase.firestore.FieldValue.increment(-1),
+        });
+      } else if (item.size === "Medium") {
+        docRef.update({
+          "sizes.mediumAmount": firebase.firestore.FieldValue.increment(-1),
+        });
+      } else if (item.size === "Large") {
+        docRef.update({
+          "sizes.largeAmount": firebase.firestore.FieldValue.increment(-1),
+        });
+      } else if (item.size === "XL") {
+        docRef.update({
+          "size.xlargeAmount": firebase.firestore.FieldValue.increment(-1),
+        });
+      }
+    });
+  };
 
   // method to add all prices up
   const addPrices = (prices) => {
@@ -68,6 +90,7 @@ function Cart() {
     return total;
   };
 
+  // here we create the paypal order and give it all its needed data
   const createOrder = (data, actions) => {
     console.log(total);
     return actions.order.create({
@@ -81,8 +104,11 @@ function Cart() {
     });
   };
 
+  // this is executed when paypal transaction is succesful
   const onApprove = (data, actions) => {
     const order = actions.order.capture();
+
+    removeSizeItemCounter();
 
     db.collection("ShoppingCart").doc(currentUser.uid).update({
       cart: firebase.firestore.FieldValue.delete(),
@@ -109,7 +135,7 @@ function Cart() {
             {usersCart == null || usersCart.length <= 0 ? (
               <h2>no Items in your cart</h2>
             ) : (
-              usersCart.map((itemId) => <CartItem id={itemId} />)
+              usersCart.map((item) => <CartItem item={item} />)
             )}
           </div>
           <div className="cart__paypal" id="cart__paypal">
@@ -126,7 +152,7 @@ function Cart() {
 
 export default Cart;
 
-function CartItem({ id }) {
+function CartItem({ item }) {
   const [price, setPrice] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const [title, setTitle] = useState("");
@@ -138,23 +164,23 @@ function CartItem({ id }) {
   useEffect(() => {
     const getItem = db
       .collection("posts")
-      .doc(id)
+      .doc(item.id)
       .get()
       .then((doc) => {
         setPrice(doc.data().price);
         setImgUrl(doc.data().imageUrl);
         setTitle(doc.data().title);
-        setPostId(id);
+        setPostId(item.id);
       });
 
     return getItem;
-  }, [id, updater]);
+  }, [item, updater]);
 
   const removeItem = () => {
     db.collection("ShoppingCart")
       .doc(currentUser.uid)
       .update({
-        cart: firebase.firestore.FieldValue.arrayRemove(postId),
+        cart: firebase.firestore.FieldValue.arrayRemove(item),
       })
       .then(() => {
         setUpdater(updater + 1);
@@ -167,6 +193,7 @@ function CartItem({ id }) {
 
       <h2>{title}</h2>
       <h3>$: {price}</h3>
+      <h3>Size: {item.size}</h3>
 
       <Button onClick={removeItem}>
         <HighlightOffIcon style={{ fill: "red" }} />

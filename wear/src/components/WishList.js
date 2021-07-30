@@ -46,7 +46,7 @@ function WishList() {
         {usersWishList.length <= 0 ? (
           <h2>No items in your list</h2>
         ) : (
-          usersWishList.map((itemid) => <WishListItem id={itemid} />)
+          usersWishList.map((item) => <WishListItem item={item} />)
         )}
       </div>
     </div>
@@ -55,7 +55,7 @@ function WishList() {
 
 export default WishList;
 
-function WishListItem({ id }) {
+function WishListItem({ item }) {
   const { currentUser } = useAuth();
   const [price, setPrice] = useState("");
   const [imgUrl, setImgUrl] = useState("");
@@ -67,17 +67,17 @@ function WishListItem({ id }) {
   useEffect(() => {
     const getPost = db
       .collection("posts")
-      .doc(id)
+      .doc(item.id)
       .get()
       .then((doc) => {
         setPrice(doc.data().price);
         setImgUrl(doc.data().imageUrl);
         setTitle(doc.data().title);
-        setPostId(id);
+        setPostId(item.id);
       });
 
     return getPost;
-  }, [id, updater]);
+  }, [item, updater]);
 
   const addToCart = () => {
     var docRef = db.collection("ShoppingCart").doc(currentUser.uid);
@@ -88,12 +88,12 @@ function WishListItem({ id }) {
         if (doc.exists) {
           console.log("document Exists");
           docRef.update({
-            cart: firebase.firestore.FieldValue.arrayUnion(postId),
+            cart: firebase.firestore.FieldValue.arrayUnion(item),
           });
         } else {
           console.log("document does not exists for thsi user creating now...");
           docRef.set({
-            cart: [postId],
+            cart: [item],
           });
         }
       })
@@ -102,7 +102,7 @@ function WishListItem({ id }) {
           .collection("WishList")
           .doc(currentUser.uid)
           .update({
-            postList: firebase.firestore.FieldValue.arrayRemove(postId),
+            postList: firebase.firestore.FieldValue.arrayRemove(item),
           }),
         setUpdater(updater + 1)
       );
@@ -114,6 +114,7 @@ function WishListItem({ id }) {
 
       <h2>{title}</h2>
       <h3>$: {price}</h3>
+      <h3>Size: {item.size}</h3>
       <Button onClick={addToCart}>
         <ShoppingCartIcon />
       </Button>

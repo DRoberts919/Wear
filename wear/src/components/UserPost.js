@@ -78,13 +78,14 @@ function UserPost() {
                 userImg: currentUser.photoURL,
                 price: price,
                 sizes: {
-                  smallAmount: smallAmount,
-                  mediumAmount: mediumAmount,
-                  largeAmount: largeAmount,
-                  xlargeAmount: xlargeAmount,
+                  smallAmount: Number(smallAmount),
+                  mediumAmount: Number(mediumAmount),
+                  largeAmount: Number(largeAmount),
+                  xlargeAmount: Number(xlargeAmount),
                 },
                 color: color,
                 style: style,
+                itemSold: false,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               })
               .catch((error) => {
