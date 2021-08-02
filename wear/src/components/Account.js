@@ -9,6 +9,9 @@ import { db } from "../firebase";
 // css import
 import "../styles/account.css";
 
+// image import
+import soldItem from "../images/soldItem.png";
+
 // material-ui
 import { Avatar, Button } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -83,9 +86,12 @@ export default Account;
 
 function UserImg({ data }) {
   return (
-    <div
-      className="userImg"
-    >
+    <div className="userImg">
+      <img
+        src={soldItem}
+        style={data.itemSold ? { display: "block" } : { display: "none" }}
+        className="userImg__soldItem"
+      />
       <img className="userImg__image" src={data.imageUrl} />
     </div>
   );

@@ -32,6 +32,20 @@
   max-width: 290px;
   max-height: 290px;
   margin: 4px;
+
+  
+}
+
+.userImg__soldItem{
+  min-width: 290px;
+  min-height: 290px;
+  max-width: 290px;
+  max-height: 290px;
+
+  z-index: 10;
+
+  position: absolute;
+  
 }
 
 .userImg__image {
@@ -39,4 +53,8 @@
   width: fit-content;
   max-width: 290px;
   max-height: 290px;
+
+  position: relative;
+  top: 0;
+  left: 0;
 }
