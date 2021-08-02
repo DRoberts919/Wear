@@ -43,6 +43,7 @@ function Home() {
             price={post.price}
             postId={id}
             userPhoto={post.userImg}
+            isSold ={post.itemSold}
           />
         ))}
       </div>

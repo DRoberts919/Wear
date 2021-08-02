@@ -85,7 +85,6 @@ function UserImg({ data }) {
   return (
     <div
       className="userImg"
-      // style={{ backgroundImage: `url(${data.imageUrl})` }}
     >
       <img className="userImg__image" src={data.imageUrl} />
     </div>

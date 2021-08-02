@@ -55,6 +55,8 @@ function Cart() {
     }
   }, [paidFor, usersCart]);
 
+  // fucntion to subtract from the the collections of sizes to simulate
+  // an item being removed from the sellers stock
   const removeSizeItemCounter = () => {
     usersCart.forEach((item) => {
       var docRef = db.collection("posts").doc(item.id);
@@ -72,9 +74,32 @@ function Cart() {
         });
       } else if (item.size === "XL") {
         docRef.update({
-          "size.xlargeAmount": firebase.firestore.FieldValue.increment(-1),
+          "sizes.xlargeAmount": firebase.firestore.FieldValue.increment(-1),
         });
       }
+    });
+  };
+
+  // check if an item is all sold out and sets soldOut field to true
+  const checkItemStock = () => {
+    usersCart.forEach((item) => {
+      var docRef = db.collection("posts").doc(item.id);
+
+      docRef.get().then((doc) => {
+        var sizeObject = doc.data().sizes;
+        if (
+          sizeObject.smallAmount <= 0 &&
+          sizeObject.mediumAmount <= 0 &&
+          sizeObject.largeAmount <= 0 &&
+          sizeObject.xlargeAmount <= 0
+        ) {
+          docRef.update({
+            itemSold: true,
+          });
+        } else {
+          console.log("item still available");
+        }
+      });
     });
   };
 
@@ -109,6 +134,7 @@ function Cart() {
     const order = actions.order.capture();
 
     removeSizeItemCounter();
+    checkItemStock();
 
     db.collection("ShoppingCart").doc(currentUser.uid).update({
       cart: firebase.firestore.FieldValue.delete(),
@@ -116,6 +142,7 @@ function Cart() {
 
     setPaidFor(true);
     console.log(order);
+    
   };
   return (
     <div className="cart">

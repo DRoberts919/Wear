@@ -19,6 +19,7 @@ function Post({
   postId,
   title,
   userPhoto,
+  isSold,
 }) {
   const [sizeSelected, setSizeSelected] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
@@ -72,7 +73,14 @@ function Post({
   };
 
   return (
-    <div className="post">
+    <div
+      className="post"
+      style={
+        isSold
+          ? { display: "none", visibility: "hidden" }
+          : { display: "block" }
+      }
+    >
       <div className="post__header">
         <Avatar className="post__avatar" alt={username} src={userPhoto} />
         <h3>{username}</h3>
