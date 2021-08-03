@@ -74,3 +74,9 @@
   margin: 0 auto;
   background-color: #f9f8f8;
 }
+
+.app__searchBar {
+  width: 100px;
+  height: 20px;
+  border-radius: 20px;
+}

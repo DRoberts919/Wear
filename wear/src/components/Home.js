@@ -24,6 +24,7 @@ function Home() {
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         // onSnapShot will update this component when new data is provided
+
         setPosts(
           snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
         );
@@ -33,19 +34,26 @@ function Home() {
   return (
     <div className="landing">
       <div className="home__posts">
-        {posts.map(({ id, post }) => (
-          <Post
-            key={id}
-            title={post.title}
-            username={post.username}
-            caption={post.caption}
-            imageUrl={post.imageUrl}
-            price={post.price}
-            postId={id}
-            userPhoto={post.userImg}
-            isSold ={post.itemSold}
-          />
-        ))}
+        {posts.map(({ id, post }) => {
+          if (post.itemSold == true) {
+            posts.pop(post);
+          } else {
+            return (
+              <Post
+                key={id}
+                title={post.title}
+                username={post.username}
+                caption={post.caption}
+                imageUrl={post.imageUrl}
+                price={post.price}
+                postId={id}
+                userPhoto={post.userImg}
+                isSold={post.itemSold}
+                postList={posts}
+              />
+            );
+          }
+        })}
       </div>
       {/* user Nave bar div with component */}
       <div className="home__userNav">
@@ -56,6 +64,18 @@ function Home() {
 }
 
 export default Home;
+
+// <Post
+// key={id}
+// title={post.title}
+// username={post.username}
+// caption={post.caption}
+// imageUrl={post.imageUrl}
+// price={post.price}
+// postId={id}
+// userPhoto={post.userImg}
+// isSold ={post.itemSold}
+// />
 
 function UserNav() {
   // get the current user

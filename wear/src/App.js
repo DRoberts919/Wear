@@ -1,13 +1,8 @@
+
 import "./styles/App.css";
 import logo from "./images/w-logo.png";
 // import { useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  // useHistory,
-  Switch,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 import { Button } from "@material-ui/core";
 import { useAuth } from "./context/AuthContext";
@@ -39,6 +34,8 @@ function App() {
           </Link>
           {currentUser ? (
             <div className="app__headerButtons">
+              <input className="app__searchBar" placeholder="search" />
+
               <Link to="/home">
                 <Button>Home</Button>
               </Link>

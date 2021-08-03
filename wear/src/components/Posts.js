@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import { useAuth } from "../context/AuthContext";
 import { db, firebase } from "../firebase";
@@ -19,11 +19,55 @@ function Post({
   postId,
   title,
   userPhoto,
-  isSold,
+  postList,
 }) {
   const [sizeSelected, setSizeSelected] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
+  const [clickedOption, setClickedOption] = useState("post__sizeOption");
+  const [suggestedItems, setSuggestedItems] = useState([]);
+  const [itemArray, setItemArray] = useState(postList);
   const { currentUser } = useAuth();
+
+  useEffect(() => {
+    let tempArray = [];
+    let max = itemArray.length;
+
+    for (let i = 0; i < 3; i++) {
+      let index = Math.floor(Math.random() * (max - 0) + 0);
+      tempArray.push(itemArray[index]);
+      itemArray.splice(max, 1);
+    }
+
+    setSuggestedItems(tempArray);
+  }, [itemArray]);
+
+  const select = (id) => {
+    var s = document.getElementById("S");
+    var m = document.getElementById("M");
+    var l = document.getElementById("L");
+    var xl = document.getElementById("XL");
+    if (id === "S") {
+      s.classList.add("post__sizeOptionClicked");
+      m.classList.remove("post__sizeOptionClicked");
+      l.classList.remove("post__sizeOptionClicked");
+      xl.classList.remove("post__sizeOptionClicked");
+    } else if (id === "M") {
+      m.classList.add("post__sizeOptionClicked");
+      s.classList.remove("post__sizeOptionClicked");
+      l.classList.remove("post__sizeOptionClicked");
+      xl.classList.remove("post__sizeOptionClicked");
+    } else if (id === "L") {
+      l.classList.add("post__sizeOptionClicked");
+      s.classList.remove("post__sizeOptionClicked");
+      m.classList.remove("post__sizeOptionClicked");
+      xl.classList.remove("post__sizeOptionClicked");
+    } else if (id === "XL") {
+      xl.classList.add("post__sizeOptionClicked");
+      s.classList.remove("post__sizeOptionClicked");
+      m.classList.remove("post__sizeOptionClicked");
+      l.classList.remove("post__sizeOptionClicked");
+    }
+  };
 
   // fucntion to add this post to a users wishlist.
   const addTowishList = () => {
@@ -58,7 +102,7 @@ function Post({
     };
 
     docRef.get().then((doc) => {
-      if (doc.exists && selectedSize != "") {
+      if (doc.exists && selectedSize !== "") {
         console.log("document Exists");
         docRef.update({
           cart: firebase.firestore.FieldValue.arrayUnion(cartItem),
@@ -73,14 +117,7 @@ function Post({
   };
 
   return (
-    <div
-      className="post"
-      style={
-        isSold
-          ? { display: "none", visibility: "hidden" }
-          : { display: "block" }
-      }
-    >
+    <div className="post" id={postId}>
       <div className="post__header">
         <Avatar className="post__avatar" alt={username} src={userPhoto} />
         <h3>{username}</h3>
@@ -98,44 +135,49 @@ function Post({
             <AttachMoneyIcon />: {price}
           </div>
           <div className="post__sizes">
-            <h5 className="post__sizesTitle">Select Size</h5>
+            <h5 className="post__sizesTitle">Sizes :</h5>
             <div className="post__sizeContainer">
               <div
-                className="post__sizeOption"
+                className="post__sizeOption "
+                id="S"
                 onClick={() => {
                   setSelectedSize("Small");
-                  setSizeSelected(true);
+                  select("S");
                 }}
               >
-                <h6>Small</h6>
+                <p className="post__sizeTitle">S</p>
               </div>
               <div
-                className="post__sizeOption"
+                className={clickedOption}
+                id="M"
                 onClick={() => {
                   setSelectedSize("Medium");
-                  setSizeSelected(true);
+                  select("M");
                 }}
               >
-                <h6>Medium</h6>
+                <p className="post__sizeTitle">M</p>
               </div>
               <div
-                className="post__sizeOption"
+                className={clickedOption}
+                id="L"
                 onClick={() => {
                   setSelectedSize("Large");
-                  setSizeSelected(true);
+                  select("L");
                 }}
               >
-                <h6>Large</h6>
+                <p className="post__sizeTitle">L</p>
               </div>
               <div
-                className="post__sizeOption"
+                className={clickedOption}
+                id="XL"
                 onClick={() => {
                   setSelectedSize("XL");
-                  setSizeSelected(true);
+                  select("XL");
                 }}
               >
-                <h6>Xlarge</h6>
+                <p className="post__sizeTitle">XL</p>
               </div>
+              <h5>selected Size: {selectedSize}</h5>
             </div>
           </div>
           <div className="post__buttons">
@@ -159,6 +201,18 @@ function Post({
             >
               <ShoppingCartIcon />
             </Button>
+          </div>
+          <div className="post__suggestedItemContainer">
+            <p>Suggested Items</p>
+            {suggestedItems.map((item) => (
+              <a href={"#" + item.id}>
+                <img
+                  alt=""
+                  className="post__suggestedItemPicture"
+                  src={item.post.imageUrl}
+                />
+              </a>
+            ))}
           </div>
         </div>
       </div>

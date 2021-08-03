@@ -20,6 +20,7 @@ export function AuthProvider({ children }) {
         db.collection("userCollection").add({
           uid: authuser.user.uid,
           description: "Welcome to my account!",
+          username: authuser.displayName,
         });
         return authuser.user.updateProfile({
           displayName: username,
