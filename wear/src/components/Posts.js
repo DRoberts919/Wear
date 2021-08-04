@@ -12,6 +12,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 
 function Post({
+  index,
   username,
   caption,
   imageUrl,
@@ -32,6 +33,12 @@ function Post({
     let tempArray = [];
     let max = itemArray.length;
 
+    itemArray.forEach((item) => {
+      if (item.post.isSold == true) {
+        itemArray.pop(item);
+      }
+    });
+
     for (let i = 0; i < 3; i++) {
       let index = Math.floor(Math.random() * (max - 0) + 0);
       tempArray.push(itemArray[index]);
@@ -42,10 +49,10 @@ function Post({
   }, [itemArray]);
 
   const select = (id) => {
-    var s = document.getElementById("S");
-    var m = document.getElementById("M");
-    var l = document.getElementById("L");
-    var xl = document.getElementById("XL");
+    var s = document.getElementById("S" + index);
+    var m = document.getElementById("M" + index);
+    var l = document.getElementById("L" + index);
+    var xl = document.getElementById("XL" + index);
     if (id === "S") {
       s.classList.add("post__sizeOptionClicked");
       m.classList.remove("post__sizeOptionClicked");
@@ -138,8 +145,8 @@ function Post({
             <h5 className="post__sizesTitle">Sizes :</h5>
             <div className="post__sizeContainer">
               <div
-                className="post__sizeOption "
-                id="S"
+                className="post__sizeOption"
+                id={"S" + index}
                 onClick={() => {
                   setSelectedSize("Small");
                   select("S");
@@ -149,7 +156,7 @@ function Post({
               </div>
               <div
                 className={clickedOption}
-                id="M"
+                id={"M" + index}
                 onClick={() => {
                   setSelectedSize("Medium");
                   select("M");
@@ -159,7 +166,7 @@ function Post({
               </div>
               <div
                 className={clickedOption}
-                id="L"
+                id={"L" + index}
                 onClick={() => {
                   setSelectedSize("Large");
                   select("L");
@@ -169,7 +176,7 @@ function Post({
               </div>
               <div
                 className={clickedOption}
-                id="XL"
+                id={"XL" + index}
                 onClick={() => {
                   setSelectedSize("XL");
                   select("XL");

@@ -34,13 +34,14 @@ function Home() {
   return (
     <div className="landing">
       <div className="home__posts">
-        {posts.map(({ id, post }) => {
+        {posts.map(({ id, post }, index) => {
           if (post.itemSold == true) {
             posts.pop(post);
           } else {
             return (
               <Post
-                key={id}
+                key={index}
+                index={index}
                 title={post.title}
                 username={post.username}
                 caption={post.caption}
