@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 // firebase helper methods
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 
 // css import
 import "../styles/account.css";
@@ -57,19 +57,30 @@ function Account() {
               the user header has a description, avatar icon, and name! */}
       <div className="account__header">
         {/* users image */}
-        <Avatar alt="currentUser" src={currentUser.photoURL}></Avatar>
+        <Avatar
+          alt="currentUser"
+          src={currentUser.photoURL}
+          style={{ height: "120px", width: "120px" }}
+        ></Avatar>
         {/* users display name */}
-        <h1 className="account__userName">{currentUser.displayName}</h1>
-        {/* users dectiption */}
-        <h5>{description}</h5>
-        <Button>
-          <Link to="/editAccount">
-            <SettingsIcon />
-          </Link>
-        </Button>
-        <Link to="/home">
-          <Button>Home</Button>
-        </Link>
+        <div className="account__headerInfo">
+          <h1 className="account__userName">{currentUser.displayName}</h1>
+          {/* users dectiption */}
+          <h5>{description}</h5>
+          <Button>
+            <Link to="/editAccount">
+              <SettingsIcon />
+            </Link>
+          </Button>
+          <Button
+            onClick={() => {
+              auth.signOut();
+              console.log("user signed out");
+            }}
+          >
+            Log out
+          </Button>
+        </div>
       </div>
       <hr></hr>
       <div className="account__posts">

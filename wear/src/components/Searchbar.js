@@ -11,7 +11,7 @@ function Searchbar() {
         onChange={(e) => setSearchedUser(e.target.value)}
       ></input>
       <Link to={"/searchedUser/" + searchedUser}>
-        <button>Search</button>
+        <button onClick={() => setSearchedUser("")}>Search</button>
       </Link>
     </div>
   );

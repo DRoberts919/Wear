@@ -12,6 +12,18 @@
   background-color: #f9f8f8;
 }
 
+.account__header {
+  display: flex;
+  flex-direction: row;
+
+  padding-left: 15px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.account__headerInfo {
+  margin-left: 50px;
+}
 /* apostContainer */
 
 .account__posts {
@@ -32,11 +44,9 @@
   max-width: 290px;
   max-height: 290px;
   margin: 4px;
-
-  
 }
 
-.userImg__soldItem{
+.userImg__soldItem {
   min-width: 290px;
   min-height: 290px;
   max-width: 290px;
@@ -45,7 +55,6 @@
   z-index: 10;
 
   position: absolute;
-  
 }
 
 .userImg__image {

@@ -16,6 +16,7 @@ function SearchedUser() {
   const [check, setCheck] = useState(false);
   const [description, setDescription] = useState("");
   const [username, setUsername] = useState("");
+  const [checkUser, setCheckUser] = useState(false);
 
   const [userPost, setUserPosts] = useState([]);
 
@@ -33,8 +34,10 @@ function SearchedUser() {
             setDescription(item.data().description);
             setUsername(item.data().username);
             setUserPhoto(item.data().imageUrl);
+            setCheckUser(true);
           } else {
             console.log("error");
+            setCheckUser(false);
           }
         });
       });
@@ -50,9 +53,13 @@ function SearchedUser() {
         .then((docdata) => {
           docdata.forEach((item) => {
             if (item.exists) {
+              console.log("user exists");
               posts.push(item.data());
+              setCheck(true);
             } else {
               console.log("no items");
+
+              setCheck(false);
             }
           });
           setUserPosts(posts);
@@ -65,31 +72,39 @@ function SearchedUser() {
   useEffect(() => {
     getUserData();
     getUserPosts();
-  }, []);
+  }, [id]);
 
   return (
     <div className="account">
+      {checkUser ? (
+        <>
+          <div className="account__header">
+            {/* users image */}
+            <Avatar alt="currentUser" src={userPhoto}></Avatar>
+            {/* users display name */}
+            <h1 className="account__userName">{username}</h1>
+            {/* users dectiption */}
+            <h5>{description}</h5>
+            <Link to="/home">
+              <Button>Home</Button>
+            </Link>
+          </div>
+          <hr></hr>
+          <div className="account__posts">
+            {check ? (
+              <h1>no posts</h1>
+            ) : (
+              userPost.map((imgData, index) => (
+                <UserImg key={index} data={imgData} />
+              ))
+            )}
+          </div>
+        </>
+      ) : (
+        <h1>User does not exist</h1>
+      )}
       {/* user header 
               the user header has a description, avatar icon, and name! */}
-      <div className="account__header">
-        {/* users image */}
-        <Avatar alt="currentUser" src={userPhoto}></Avatar>
-        {/* users display name */}
-        <h1 className="account__userName">{username}</h1>
-        {/* users dectiption */}
-        <h5>{description}</h5>
-        <Link to="/home">
-          <Button>Home</Button>
-        </Link>
-      </div>
-      <hr></hr>
-      <div className="account__posts">
-        {check ? (
-          <h1>no posts</h1>
-        ) : (
-          userPost.map((imgData) => <UserImg data={imgData} />)
-        )}
-      </div>
     </div>
   );
 }

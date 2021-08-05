@@ -43,14 +43,6 @@ function App() {
               <Link to="/account">
                 <Button>account</Button>
               </Link>
-              <Button
-                onClick={() => {
-                  auth.signOut();
-                  console.log("user signed out");
-                }}
-              >
-                Log out
-              </Button>
             </div>
           ) : (
             <div className="app__authButtons">

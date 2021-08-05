@@ -15,13 +15,12 @@ import AddIcon from "@material-ui/icons/Add";
 import { Avatar } from "@material-ui/core";
 
 function Home() {
-  // post array that will store all posts to be used on the home page 
+  // post array that will store all posts to be used on the home page
   const [posts, setPosts] = useState([]);
 
-  // useEffect to get all posts
-  useEffect(() => {
-    // access my posts database
-    db.collection("posts")
+  const getPosts = async () => {
+    await db
+      .collection("posts")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         // onSnapShot will update this component when new data is provided
@@ -30,6 +29,12 @@ function Home() {
           snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
         );
       });
+  };
+
+  // useEffect to get all posts
+  useEffect(() => {
+    // access my posts database
+    getPosts();
   }, [posts]);
 
   return (
@@ -66,8 +71,6 @@ function Home() {
 }
 
 export default Home;
-
-
 
 function UserNav() {
   // get the current user
