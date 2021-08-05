@@ -16,9 +16,7 @@ function EditAccount() {
 
   const setImage = (e) => {
     if (e.target.value[0]) {
-      console.log(e.target.files[0]);
       setUserImg(e.target.files[0]);
-      console.log(userImg);
     }
   };
 
@@ -78,7 +76,6 @@ function EditAccount() {
               displayName: userName,
               photoURL: url,
             });
-
             db.collection("posts")
               .where("userId", "==", currentUser.uid)
               .get()
@@ -87,6 +84,17 @@ function EditAccount() {
                 queryData.forEach((doc) => {
                   db.collection("posts").doc(doc.id).update({
                     userImg: url,
+                  });
+                });
+              });
+
+            db.collection("userCollection")
+              .where("uid", "==", currentUser.uid)
+              .get()
+              .then((queryData) => {
+                queryData.forEach((item) => {
+                  db.collection("userCollection").doc(item.id).update({
+                    userImage: url,
                   });
                 });
               });
@@ -126,6 +134,17 @@ function EditAccount() {
                 queryData.forEach((doc) => {
                   db.collection("posts").doc(doc.id).update({
                     userImg: url,
+                  });
+                });
+              });
+
+            db.collection("userCollection")
+              .where("uid", "==", currentUser.uid)
+              .get()
+              .then((queryData) => {
+                queryData.forEach((item) => {
+                  db.collection("userCollection").doc(item.id).update({
+                    userImage: url,
                   });
                 });
               });
@@ -212,8 +231,7 @@ function EditAccount() {
                   });
                 });
               });
-          })
-          .then(() => {
+
             db.collection("userCollection")
               .where("uid", "==", currentUser.uid)
               .get()
@@ -221,10 +239,12 @@ function EditAccount() {
                 queryData.forEach((doc) => {
                   db.collection("userCollection").doc(doc.id).update({
                     description: description,
+                    userImage: url,
                   });
                 });
               });
-
+          })
+          .then(() => {
             history.push("/account");
           })
           .then(() => {

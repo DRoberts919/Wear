@@ -25,6 +25,7 @@ function Signup() {
     }
 
     try {
+      console.log(username);
       setError("");
       setLoading(true);
       await signUp(email, password, username);

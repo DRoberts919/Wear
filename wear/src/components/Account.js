@@ -22,7 +22,6 @@ function Account() {
   const [usersImg, setUsersImg] = useState([]);
 
   // useEffect to get the users description
-
   useEffect(() => {
     var postList = [];
 
@@ -36,7 +35,7 @@ function Account() {
           }
         });
       });
-
+    // api call to get all posts connected to a users
     var getPosts = db
       .collection("posts")
       .get()

@@ -16,6 +16,7 @@ function Cart() {
   const [usersCart, setUsersCart] = useState([]);
   const [total, setTotal] = useState();
   const [paidFor, setPaidFor] = useState(false);
+  const [check, setCheck] = useState(false);
 
   //   useEffect to get all data from the users cart!
   useEffect(() => {
@@ -26,8 +27,10 @@ function Cart() {
       .then((doc) => {
         if (doc.exists) {
           setUsersCart(doc.data().cart);
+          setCheck(false);
         } else {
           setUsersCart("No data Exists for this user");
+          setCheck(true);
         }
       });
 
@@ -142,7 +145,6 @@ function Cart() {
 
     setPaidFor(true);
     console.log(order);
-    
   };
   return (
     <div className="cart">
@@ -159,8 +161,11 @@ function Cart() {
       ) : (
         <div className="cart__body">
           <div className="cart__items">
-            {usersCart == null || usersCart.length <= 0 ? (
-              <h2>no Items in your cart</h2>
+            {check ? (
+              <div>
+                <h2>no Items in your cart</h2>
+                <h3>Sorry</h3>
+              </div>
             ) : (
               usersCart.map((item) => <CartItem item={item} />)
             )}

@@ -15,6 +15,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { Avatar } from "@material-ui/core";
 
 function Home() {
+  // post array that will store all posts to be used on the home page 
   const [posts, setPosts] = useState([]);
 
   // useEffect to get all posts
@@ -66,17 +67,7 @@ function Home() {
 
 export default Home;
 
-// <Post
-// key={id}
-// title={post.title}
-// username={post.username}
-// caption={post.caption}
-// imageUrl={post.imageUrl}
-// price={post.price}
-// postId={id}
-// userPhoto={post.userImg}
-// isSold ={post.itemSold}
-// />
+
 
 function UserNav() {
   // get the current user

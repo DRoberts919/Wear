@@ -29,6 +29,7 @@ function Post({
   const [itemArray, setItemArray] = useState(postList);
   const { currentUser } = useAuth();
 
+  // useEffect to get 3 random posts as a suggested item
   useEffect(() => {
     let tempArray = [];
     let max = itemArray.length;
@@ -48,6 +49,7 @@ function Post({
     setSuggestedItems(tempArray);
   }, [itemArray]);
 
+  // changes css for a selected button for each post
   const select = (id) => {
     var s = document.getElementById("S" + index);
     var m = document.getElementById("M" + index);
@@ -149,6 +151,8 @@ function Post({
                 id={"S" + index}
                 onClick={() => {
                   setSelectedSize("Small");
+                  setSizeSelected(true);
+
                   select("S");
                 }}
               >
@@ -159,6 +163,7 @@ function Post({
                 id={"M" + index}
                 onClick={() => {
                   setSelectedSize("Medium");
+                  setSizeSelected(true);
                   select("M");
                 }}
               >
@@ -169,6 +174,8 @@ function Post({
                 id={"L" + index}
                 onClick={() => {
                   setSelectedSize("Large");
+                  setSizeSelected(true);
+
                   select("L");
                 }}
               >
@@ -179,6 +186,8 @@ function Post({
                 id={"XL" + index}
                 onClick={() => {
                   setSelectedSize("XL");
+                  setSizeSelected(true);
+
                   select("XL");
                 }}
               >
@@ -211,8 +220,8 @@ function Post({
           </div>
           <div className="post__suggestedItemContainer">
             <p>Suggested Items</p>
-            {suggestedItems.map((item) => (
-              <a href={"#" + item.id}>
+            {suggestedItems.map((item, index) => (
+              <a key={index} href={"#" + item.id}>
                 <img
                   alt=""
                   className="post__suggestedItemPicture"

@@ -4,6 +4,7 @@ import { auth, db } from "../firebase";
 // my created context
 const AuthContext = React.createContext();
 
+// funciton to use all my context functions
 export function useAuth() {
   return useContext(AuthContext);
 }
@@ -11,16 +12,19 @@ export function useAuth() {
 // setting my auth Provider so i can share user data across whole project
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
+  const [userid, setuserId] = useState();
 
   // function to sign up a user taking in a few params.
   function signUp(email, password, username) {
     return auth
       .createUserWithEmailAndPassword(email, password)
       .then((authuser) => {
+        setuserId(authuser.user.id);
         db.collection("userCollection").add({
           uid: authuser.user.uid,
           description: "Welcome to my account!",
-          username: authuser.displayName,
+          username: username,
+          userImage: "",
         });
         return authuser.user.updateProfile({
           displayName: username,
@@ -51,6 +55,7 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, [currentUser]);
 
+  // values i can pull througout the application
   const value = {
     currentUser,
     signUp,

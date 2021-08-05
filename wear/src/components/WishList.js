@@ -11,6 +11,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 function WishList() {
   // variable for storing all users current wishlist items
   const [usersWishList, setUsersWishList] = useState([]);
+  const [check, setCheck] = useState(false);
   const { currentUser } = useAuth();
 
   //   useEffect to get all the users current wishilist items and sets it
@@ -25,7 +26,9 @@ function WishList() {
       .then((doc) => {
         if (doc.exists) {
           setUsersWishList(doc.data().postList);
+          setCheck(false);
         } else {
+          setCheck(true);
           setUsersWishList("no data exits");
         }
       });
@@ -43,10 +46,13 @@ function WishList() {
         </Link>
       </div>
       <div className="wishList__body">
-        {usersWishList.length <= 0 ? (
-          <h2>No items in your list</h2>
+        {check ? (
+          <div>
+            <h2>No items in your list</h2>
+            <h3>sorry</h3>
+          </div>
         ) : (
-          usersWishList.map((item) => <WishListItem item={item} />)
+          usersWishList.map((item,index) => <WishListItem key={index} item={item} />)
         )}
       </div>
     </div>

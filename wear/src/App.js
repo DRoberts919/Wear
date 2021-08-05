@@ -1,12 +1,11 @@
-
 import "./styles/App.css";
 import logo from "./images/w-logo.png";
-// import { useEffect } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 import { Button } from "@material-ui/core";
 import { useAuth } from "./context/AuthContext";
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
 
 // components
 import Signup from "./components/Signup";
@@ -19,6 +18,8 @@ import UserPost from "./components/UserPost";
 import PrivateRoute from "./components/PrivateRoute";
 import EditAccount from "./components/EditAccount";
 import LandingPage from "./components/LandingPage";
+import SearchedUser from "./components/SearchedUser";
+import Searchbar from "./components/Searchbar";
 
 // helper fucntions
 
@@ -34,7 +35,7 @@ function App() {
           </Link>
           {currentUser ? (
             <div className="app__headerButtons">
-              <input className="app__searchBar" placeholder="search" />
+              <Searchbar />
 
               <Link to="/home">
                 <Button>Home</Button>
@@ -72,6 +73,7 @@ function App() {
           <PrivateRoute path="/wishList" component={WishList} />
           <PrivateRoute path="/post" component={UserPost} />
           <PrivateRoute path="/editAccount" component={EditAccount} />
+          <PrivateRoute path="/searchedUser/:id" component={SearchedUser} />
         </Switch>
       </div>
     </Router>
