@@ -1,0 +1,41 @@
+.searchBar {
+  margin-right: 500px;
+}
+
+.searchBar__input {
+  height: 40px;
+  padding-right: 50px;
+  border-radius: 30px;
+  font-size: large;
+}
+
+.searchBar__input:focus-visible {
+  outline: none;
+}
+
+.searchBar__button {
+  margin-left: -50px;
+  border-radius: 50%;
+}
+
+.searchBar__searchedUsers {
+  position: absolute;
+  width: 270px;
+  height: 150px;
+  max-height: 200px;
+  border-radius: 20px;
+}
+
+.searchBar__searchedResult {
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.searchBar__searchedResult p {
+  font-size: large;
+  font-weight: 600;
+}
+
+.searchBar__searchedResult:hover {
+  color: #53dd6c;
+}

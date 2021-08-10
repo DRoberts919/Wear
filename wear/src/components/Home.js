@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { db } from "../firebase";
 
 // material-ui Imports
-import Button from "@material-ui/core/Button";
+
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import StarIcon from "@material-ui/icons/Star";
 import PersonIcon from "@material-ui/icons/Person";
@@ -24,7 +24,6 @@ function Home() {
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         // onSnapShot will update this component when new data is provided
-
         setPosts(
           snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
         );
@@ -34,7 +33,7 @@ function Home() {
   // useEffect to get all posts
   useEffect(() => {
     // access my posts database
-    getPosts();
+   return getPosts();
   }, [posts]);
 
   return (
