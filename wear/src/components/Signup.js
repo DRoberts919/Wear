@@ -25,13 +25,12 @@ function Signup() {
     }
 
     try {
-      console.log(username);
       setError("");
       setLoading(true);
       await signUp(email, password, username);
       history.push("/home");
     } catch {
-      setError("failed to create an accoutn");
+      setError("failed to create an account");
     }
 
     setLoading(false);
@@ -40,11 +39,12 @@ function Signup() {
     setPassword("");
     setEmail("");
     setUsername("");
+    setError("");
   }
 
   return (
     <div className="auth__conatiner">
-      <img alt="wearLogo" src={logo} className="app__logo" />
+      {/* <img alt="wearLogo" src={logo} className="app__logo" /> */}
       <h1>Signup</h1>
 
       <form className="signUp__form" onSubmit={handleSignUp}>

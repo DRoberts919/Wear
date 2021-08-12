@@ -30,9 +30,12 @@ function App() {
     <Router>
       <div className="app">
         <div className="app__header">
-          <Link to="/">
-            <img alt="" className="app__logo" src={logo} />
-          </Link>
+          <div className="app__logo">
+            <Link to="/">
+              <img alt="" className="app__logo" src={logo} />
+            </Link>
+            <p className="app__EAR">EAR</p>
+          </div>
           {currentUser ? (
             <div className="app__headerButtons">
               <Searchbar />

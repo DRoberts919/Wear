@@ -138,7 +138,7 @@ function Post({
           <h4>{title}</h4>
           {/* username caption and price */}
           <h4 className="post__text">
-            <strong>{username}:</strong> {caption}
+            <strong>Desccription: </strong> {caption}
           </h4>
           <div className="post__moneyData">
             <AttachMoneyIcon />: {price}
@@ -187,7 +187,6 @@ function Post({
                 onClick={() => {
                   setSelectedSize("XL");
                   setSizeSelected(true);
-
                   select("XL");
                 }}
               >

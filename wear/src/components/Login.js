@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
-import logo from "../images/w-logo.png";
-
-import { Input, Button } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+// material-ui
+import InputAdornment from "@material-ui/core/InputAdornment";
+import { Input } from "@material-ui/core";
+
+import PersonIcon from "@material-ui/icons/Person";
+import LockIcon from "@material-ui/icons/Lock";
+
+// css
 import "../styles/login.css";
+import Lock from "@material-ui/icons/Lock";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -42,28 +48,49 @@ function Login() {
   }
 
   return (
-    <div className="login__conatiner">
-      <img alt="wearLogo" src={logo} className="app__logo" />
-      <h1>lOGIN</h1>
+    <div className="login__background">
+      <div className="login__conatiner">
+        <h1 className="login__login">Login</h1>
 
-      <form className="login__form" onSubmit={handleLogin}>
-        <Input
-          placeholder="email"
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input
-          placeholder="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <form className="login__form" onSubmit={handleLogin}>
+          <label className="login__label">Email</label>
+          <Input
+            className="login__input"
+            variant="outlined"
+            placeholder="Type your email"
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            startAdornment={
+              <InputAdornment position="start">
+                <PersonIcon />
+              </InputAdornment>
+            }
+          />
 
-        <Button type="submit">Log-In</Button>
-      </form>
-      <div className="w-100 text-center mt-2">
-        Need an Account? <Link to="/signup">Sing Up</Link>
+          <label className="login__label">Password</label>
+
+          <Input
+            className="login__input"
+            placeholder="Type your password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            startAdornment={
+              <InputAdornment position="start">
+                <LockIcon />
+              </InputAdornment>
+            }
+          />
+
+          <button className="app__button" type="submit">
+            Log-In
+          </button>
+        </form>
+        <div className="app__signup">
+          Need an Account?
+          <Link to="/signup">Sing Up</Link>
+        </div>
       </div>
     </div>
   );
