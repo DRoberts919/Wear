@@ -12,7 +12,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import StarIcon from "@material-ui/icons/Star";
 import PersonIcon from "@material-ui/icons/Person";
 import AddIcon from "@material-ui/icons/Add";
-import { Avatar } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
 
 function Home() {
   // post array that will store all posts to be used on the home page
@@ -33,7 +33,7 @@ function Home() {
   // useEffect to get all posts
   useEffect(() => {
     // access my posts database
-   return getPosts();
+    return getPosts();
   }, [posts]);
 
   return (

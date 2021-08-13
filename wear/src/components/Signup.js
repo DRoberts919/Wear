@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import { Input, Button } from "@material-ui/core";
-import logo from "../images/w-logo.png";
+import Input from "@material-ui/core/Input";
 import { useAuth } from "../context/AuthContext";
 import { Alert } from "react-bootstrap";
 import "../styles/signUp.css";
 import { useHistory, Link } from "react-router-dom";
+
+// material-ui
+import MailIcon from "@material-ui/icons/Mail";
+import LockIcon from "@material-ui/icons/Lock";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import PersonIcon from "@material-ui/icons/Person";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -43,48 +49,74 @@ function Signup() {
   }
 
   return (
-    <div className="auth__conatiner">
-      {/* <img alt="wearLogo" src={logo} className="app__logo" /> */}
-      <h1>Signup</h1>
+    <div className="signUp__background">
+      <div className="signUp__conatiner">
+        {/* <img alt="wearLogo" src={logo} className="app__logo" /> */}
+        <h1 className="signUp__singUP">Signup</h1>
 
-      <form className="signUp__form" onSubmit={handleSignUp}>
-        {error && <Alert variant="danger">{error}</Alert>}
-        <Input
-          name="email"
-          placeholder="email"
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input
-          name="password"
-          placeholder="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Input
-          name="passwordConfirm"
-          placeholder="Password Confirmation"
-          type="password"
-          value={passwordConfirm}
-          onChange={(e) => setPasswordConfirm(e.target.value)}
-        />
+        <form className="signUp__form" onSubmit={handleSignUp}>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <Input
+            className="signUp__input"
+            name="email"
+            placeholder="Type your email"
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            startAdornment={
+              <InputAdornment position="start">
+                <MailIcon />
+              </InputAdornment>
+            }
+          />
+          <Input
+            className="signUp__input"
+            name="password"
+            placeholder="Type your password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            startAdornment={
+              <InputAdornment position="start">
+                <LockIcon />
+              </InputAdornment>
+            }
+          />
+          <Input
+            className="signUp__input"
+            name="passwordConfirm"
+            placeholder="Retype your password"
+            type="password"
+            value={passwordConfirm}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
+            startAdornment={
+              <InputAdornment position="start">
+                <LockOutlinedIcon />
+              </InputAdornment>
+            }
+          />
 
-        <Input
-          name="username"
-          placeholder="username"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+          <Input
+            className="signUp__input"
+            name="username"
+            placeholder="Type your username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            startAdornment={
+              <InputAdornment position="start">
+                <PersonIcon />
+              </InputAdornment>
+            }
+          />
 
-        <Button disabled={loading} type="submit">
-          signUp
-        </Button>
-      </form>
-      <div className="w-100 text-center mt-2">
-        Have an account? <Link to="/login">Login In</Link> here
+          <button className="signUp__button" disabled={loading} type="submit">
+            signUp
+          </button>
+        </form>
+        <div className="signUp__login">
+          Have an account? <Link to="/login">Login In</Link> here
+        </div>
       </div>
     </div>
   );

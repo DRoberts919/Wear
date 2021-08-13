@@ -4,9 +4,11 @@
 
 .searchBar__input {
   height: 40px;
+  width: 370px;
   padding-right: 50px;
   border-radius: 30px;
   font-size: large;
+  border: 1px solid #000;
 }
 
 .searchBar__input:focus-visible {
@@ -20,22 +22,37 @@
 
 .searchBar__searchedUsers {
   position: absolute;
-  width: 270px;
+  margin: 0 auto;
+  background-color: #f9f8f8;
+  width: 430px;
   height: 150px;
   max-height: 200px;
+
   border-radius: 20px;
+  border-color: #53dd6c;
+  box-shadow: 0 0 10px #53dd6c;
+
+  overflow: auto;
 }
 
-.searchBar__searchedResult {
-  background-color: #ffffff;
+.searchBar__searchResult {
+  margin: 0 auto;
+  margin-bottom: 4px;
+  background-color: #f9f8f8;
   cursor: pointer;
+
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  margin-left: 3px;
 }
 
-.searchBar__searchedResult p {
+.searchBar__searchResult p {
   font-size: large;
   font-weight: 600;
+  margin-left: 12px;
 }
 
-.searchBar__searchedResult:hover {
+.searchBar__searchResult:hover {
   color: #53dd6c;
 }

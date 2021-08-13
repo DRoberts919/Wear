@@ -72,14 +72,14 @@ function Account() {
               <SettingsIcon />
             </Link>
           </Button>
-          <Button
+          <button
             onClick={() => {
               auth.signOut();
               console.log("user signed out");
             }}
           >
             Log out
-          </Button>
+          </button>
         </div>
       </div>
       <hr></hr>

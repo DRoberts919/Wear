@@ -4,14 +4,13 @@ import { useAuth } from "../context/AuthContext";
 
 // material-ui
 import InputAdornment from "@material-ui/core/InputAdornment";
-import { Input } from "@material-ui/core";
+import Input from "@material-ui/core/Input";
 
-import PersonIcon from "@material-ui/icons/Person";
+import MailIcon from "@material-ui/icons/Mail";
 import LockIcon from "@material-ui/icons/Lock";
 
 // css
 import "../styles/login.css";
-import Lock from "@material-ui/icons/Lock";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -22,8 +21,6 @@ function Login() {
   const history = useHistory();
 
   useEffect(() => {
-    // console.log(currentUser);
-
     if (currentUser) {
       history.push("/home");
     }
@@ -63,7 +60,7 @@ function Login() {
             onChange={(e) => setEmail(e.target.value)}
             startAdornment={
               <InputAdornment position="start">
-                <PersonIcon />
+                <MailIcon />
               </InputAdornment>
             }
           />
@@ -83,7 +80,7 @@ function Login() {
             }
           />
 
-          <button className="app__button" type="submit">
+          <button className="login__button" type="submit">
             Log-In
           </button>
         </form>

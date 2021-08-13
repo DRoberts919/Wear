@@ -6,6 +6,7 @@ import Fuse from "fuse.js";
 // material-ui
 import { Button } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import Avatar from "@material-ui/core/Avatar";
 
 // css
 import "../styles/searchBar.css";
@@ -29,11 +30,18 @@ function Searchbar() {
       .get()
       .then((queryData) => {
         queryData.forEach((doc) => {
-          dummyArray.push(doc.data());
+          let userOBJ = {
+            username: doc.data().username,
+            imageUrl: doc.data().userImage,
+          };
+          dummyArray.push(userOBJ);
         });
         setUsers(dummyArray);
       });
   }, [searchedUser]);
+
+  console.log(results.length);
+  console.log(userResults);
 
   return (
     <div className="searchBar">
@@ -51,17 +59,25 @@ function Searchbar() {
           <SearchIcon />
         </Button>
       </Link>
-      <div className="searchBar__searchedUsers">
-        {userResults.map((user, index) => (
-          <div
-            key={index}
-            className="searchBar__searchedResult"
-            onClick={() => setSearchedUser(user.username)}
-          >
-            <p>{user.username}</p>
-          </div>
-        ))}
-      </div>
+
+      {results.length == 0 ? (
+        <div></div>
+      ) : (
+        <div className="searchBar__searchedUsers">
+          {userResults.map((user, index) => (
+            <div
+              key={index}
+              className="searchBar__searchResult"
+              onClick={() => {
+                setSearchedUser(user.username);
+              }}
+            >
+              <Avatar alt={user.username} src={user.imageUrl} />
+              <p>{user.username}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
