@@ -9,7 +9,7 @@ import "../styles/posts.css";
 import Button from "@material-ui/core/Button";
 import StarIcon from "@material-ui/icons/Star";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import SubdirectoryArrowLeftIcon from "@material-ui/icons/SubdirectoryArrowLeft";
 
 function Post({
   index,
@@ -24,10 +24,10 @@ function Post({
 }) {
   const [sizeSelected, setSizeSelected] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
-  const [clickedOption, setClickedOption] = useState("post__sizeOption");
   const [suggestedItems, setSuggestedItems] = useState([]);
   const [itemArray, setItemArray] = useState(postList);
   const { currentUser } = useAuth();
+  const clickedOption = "post__sizeOption"
 
   // useEffect to get 3 random posts as a suggested item
   useEffect(() => {
@@ -135,16 +135,18 @@ function Post({
       <div className="post__dataBox">
         <img className="post__image" src={imageUrl} alt="" />
         <div className="post__data">
-          <h4>{title}</h4>
-          {/* username caption and price */}
-          <h4 className="post__text">
-            <strong>Desccription: </strong> {caption}
-          </h4>
+          <h4 className="post__title">{title}</h4>
+
           <div className="post__moneyData">
-            <AttachMoneyIcon />: {price}
+            {/* <AttachMoneyIcon /> */}${price}
           </div>
+          <h4 className="post__description">{caption}</h4>
+
           <div className="post__sizes">
-            <h5 className="post__sizesTitle">Sizes :</h5>
+            <h5 className="post__sizeOptionTitle">
+              selected Size: {selectedSize}
+            </h5>
+
             <div className="post__sizeContainer">
               <div
                 className="post__sizeOption"
@@ -192,11 +194,14 @@ function Post({
               >
                 <p className="post__sizeTitle">XL</p>
               </div>
-              <h5>selected Size: {selectedSize}</h5>
             </div>
           </div>
-          <div className="post__buttons">
+          <div
+            className="post__buttons"
+            style={selectedSize ? { display: "block" } : { display: "none" }}
+          >
             <Button
+              className="post__Button"
               onClick={addTowishList}
               style={
                 sizeSelected
@@ -204,9 +209,10 @@ function Post({
                   : { pointerEvents: "none" }
               }
             >
-              <StarIcon style={{ color: "yellow" }} />
+              <StarIcon style={{ color: "#53dd6c", fontSize: "40px" }} />
             </Button>
             <Button
+              className="post__Button"
               onClick={addToShoppingCart}
               style={
                 sizeSelected
@@ -214,13 +220,13 @@ function Post({
                   : { pointerEvents: "none" }
               }
             >
-              <ShoppingCartIcon />
+              <ShoppingCartIcon style={{ fontSize: "40px" }} />
             </Button>
           </div>
           <div className="post__suggestedItemContainer">
-            <p>Suggested Items</p>
+            <p className="post__suggestedItemText">Suggested Items </p>
             {suggestedItems.map((item, index) => (
-              <a key={index} href={"#" + item.id}>
+              <a className="post__suggestedItemTag" key={index} href={"#" + item.id}>
                 <img
                   alt=""
                   className="post__suggestedItemPicture"

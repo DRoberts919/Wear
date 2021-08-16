@@ -1,9 +1,77 @@
 .userPost {
-  width: 800px;
+  width: 1500px;
   height: 700px;
   margin: 0 auto;
+  margin-top: 30px;
+
   background-color: #f9f8f8;
-  text-align: center;
 }
 
+.postBox {
+  display: flex;
+  flex-direction: row;
+  width: 1500px;
+  height: 650px;
+}
 
+.userPostImg {
+  width: 50%;
+  height: 100%;
+  background-color: aqua;
+}
+
+.userPost__formDiv {
+  width: 50%;
+  height: 100%;
+
+  margin-left: 20px;
+}
+
+.userPost__form {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+}
+
+.userPost__title {
+  width: 50%;
+  margin-bottom: 5px;
+}
+
+.userPost__Description {
+  width: 90%;
+  margin-bottom: 20px;
+}
+
+.userPost__fileInput {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.userPost__price {
+  width: 40%;
+  margin-top: 20px;
+}
+
+.userPost__optionList {
+  width: 40%;
+  margin-top: 80px;
+}
+
+.userPost__sizeCount {
+  width: 120px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.MuiInput-marginDense {
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.userPost__displayImg {
+  max-width: 400px;
+  max-height: 500px;
+  object-fit: contain;
+  margin: 0 auto;
+}

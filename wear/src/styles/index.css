@@ -9,13 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #333333;
   background-color: #def0e2;
-  /* background-color: #d8d6d6;
-   */
-
-  /* background-image: url("../images/backgroundOne.png"); */
-
 }
 
 code {
@@ -24,5 +18,6 @@ code {
 }
 
 html {
-  scroll-behavior: unset;
+  /* scroll-behavior: unset; */
+  scroll-behavior: smooth;
 }
