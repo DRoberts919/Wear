@@ -16,9 +16,9 @@ import { Description } from "@material-ui/icons";
 
 function UserPost() {
   const [caption, setCaption] = useState("");
-  const [style, setStyle] = useState("Shirt");
-  const [color, setColor] = useState("Black");
-  const [price, setPrice] = useState();
+  const [style, setStyle] = useState("");
+  const [color, setColor] = useState("");
+  const [price, setPrice] = useState(null);
   const [progress, setProgress] = useState(0);
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
@@ -74,6 +74,62 @@ function UserPost() {
     if (e.target.value[0]) {
       setImage(e.target.files[0]);
       setTempFile(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+
+  // check all data points and set up error handling
+  const dataCheck = (e) => {
+    e.preventDefault();
+    if (title !== "") {
+      if (caption !== "") {
+        if (image !== null) {
+          if (price !== null) {
+            if (style !== "") {
+              if (color !== "") {
+                if (smallAmount !== null) {
+                  if (mediumAmount !== null) {
+                    if (largeAmount !== null) {
+                      if (xlargeAmount !== null) {
+                        handleUpload();
+                      } else {
+                        setError(
+                          "You must enter an amount or set it to zero (0) for no stock"
+                        );
+                      }
+                    } else {
+                      setError(
+                        "You must enter an amount or set it to zero (0) for no stock"
+                      );
+                    }
+                  } else {
+                    setError(
+                      "You must enter an amount or set it to zero (0) for no stock"
+                    );
+                  }
+                } else {
+                  setError(
+                    "You must enter an amount or set it to zero (0) for no stock"
+                  );
+                }
+              } else {
+                setError("You must add a color for filtering and searches");
+              }
+            } else {
+              setError(
+                "you must add a style to your item for backend purposes"
+              );
+            }
+          } else {
+            setError("You must add a price to your item to sell");
+          }
+        } else {
+          setError("upload a photo to show off you cool item!");
+        }
+      } else {
+        setError("you need to fill out the caption area");
+      }
+    } else {
+      setError("Your title cannot be blank");
     }
   };
 
@@ -143,18 +199,28 @@ function UserPost() {
         }
       );
     } catch (error) {
+      console.log(error);
       setError(error);
     }
   };
 
   return (
     <div className="userPost">
-      <h1 style={{ textAlign: "center" }}>Post Image</h1>
+      <h1 style={{ textAlign: "center" }}>Post!</h1>
       <hr />
 
       <div className="postBox">
         <div className="userPost__formDiv">
-          <form className="userPost__form">
+          <form className="userPost__form" onSubmit={dataCheck}>
+            <input
+              className="userPost__fileInput"
+              type="file"
+              size="40px"
+              color="#e2ebe4"
+              placeholder="Choose a file"
+              onChange={changeImage}
+            />
+
             <Input
               className="userPost__title"
               type="text"
@@ -171,15 +237,6 @@ function UserPost() {
               value={caption}
               placeholder="caption"
               onChange={(event) => setCaption(event.target.value)}
-            />
-
-            <input
-              className="userPost__fileInput"
-              type="file"
-              size="40px"
-              color="#e2ebe4"
-              placeholder="Choose a file"
-              onChange={changeImage}
             />
 
             <Input
@@ -209,8 +266,8 @@ function UserPost() {
               className="userPost__optionList"
               select
               label="Color"
-              value={style}
-              onChange={(e) => setStyle(e.target.value)}
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
               helperText="Please select Color of your item"
               margin="normal"
             >
@@ -254,29 +311,34 @@ function UserPost() {
             </div>
 
             <>
-              <Button className="imageUpload__button" onClick={handleUpload}>
+              <Button className="imageUpload__button" type="submit">
                 Upload
               </Button>
             </>
           </form>
           <progress
             value={progress}
-            style={{ height: "30px", width: "75%" }}
+            style={{ height: "30px", width: "75%", margin: "0 auto" }}
             max="100"
           />
         </div>
-        <div className="userPostImg">
+        <hr style={{ height: "600px", marginTop: "15px" }}></hr>
+        <div className="userPost__tempBox">
           <img src={tempFile} className="userPost__displayImg" />
-          <h5>Title:{title}</h5>
-          <h5>Description:{caption}</h5>
-          <h5>Price: {price}</h5>
-          <h5>Style: {style}</h5>
-          <h5>Color: {color}</h5>
-          <div className="userPost__sizeCounts">
-            <h5>Small: {smallAmount}</h5>
-            <h5>Medium: {mediumAmount}</h5>
-            <h5>Large: {largeAmount}</h5>
-            <h5>XLarge: {xlargeAmount}</h5>
+          <div className="userPost__tempData">
+            <h4 className="userPost__temptitle">{title}</h4>
+            <h5 className="userPost__tempdescription">{caption}</h5>
+            <h5 className="userPost__moneyData">${price}</h5>
+            <h5 className="userPost__filterOption">Style: {style}</h5>
+            <h5 className="userPost__filterOption">Color: {color}</h5>
+            <div className="userPost__sizeCounts">
+              <h3>S: {smallAmount}</h3>
+              <h3>M: {mediumAmount}</h3>
+              <h3>L: {largeAmount}</h3>
+              <h3>XL: {xlargeAmount}</h3>
+            </div>
+
+            {error}
           </div>
         </div>
       </div>
