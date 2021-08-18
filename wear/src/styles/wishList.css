@@ -1,6 +1,31 @@
 .wishList {
   width: 100%;
+}
 
+.wishList__header {
+  display: flex;
+  flex-direction: row;
+
+  height: 100px;
+  width: 75%;
+
+  margin-top: 10px;
+  margin: 0 auto;
+}
+
+.wishList__title {
+  margin-left: 450px;
+  font-size: 45px;
+}
+
+.wishList__homeLink {
+  margin-top: 10px;
+}
+
+.wishList__body {
+  height: 400px;
+
+  overflow: auto;
 }
 
 .wishListItem {
@@ -12,6 +37,7 @@
   margin: 0 auto;
   margin-bottom: 6px;
   border-radius: 4px;
+  justify-content: space-between;
 }
 
 .wishListItem__img {

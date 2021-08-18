@@ -20,43 +20,24 @@ function Cart() {
 
   //   useEffect to get all data from the users cart!
   useEffect(() => {
-    const getCartData = db
-      .collection("ShoppingCart")
+    getCartData();
+  }, [usersCart, paidFor]);
+
+  const getCartData = () => {
+    db.collection("ShoppingCart")
       .doc(currentUser.uid)
       .get()
       .then((doc) => {
         if (doc.exists) {
           setUsersCart(doc.data().cart);
+          addPrices();
           setCheck(false);
         } else {
           setUsersCart("No data Exists for this user");
           setCheck(true);
         }
       });
-
-    return getCartData;
-  }, [currentUser, usersCart, paidFor]);
-
-  // useEffect for paypal sdk and injecting scripts
-  useEffect(() => {
-    var prices = [];
-
-    if (usersCart == null) {
-      console.log("no items in list");
-    } else {
-      usersCart.map((cartItem) => {
-        db.collection("posts")
-          .doc(cartItem.id)
-          .get()
-          .then((doc) => {
-            // console.log(doc.data().sizes);
-            prices.push(Number(doc.data().price));
-
-            setTotal(() => addPrices(prices));
-          });
-      });
-    }
-  }, [paidFor, usersCart]);
+  };
 
   // fucntion to subtract from the the collections of sizes to simulate
   // an item being removed from the sellers stock
@@ -111,9 +92,27 @@ function Cart() {
     // takes in an array of numbers and
     var total = 0;
 
+    var prices = [];
+
+    if (usersCart == null) {
+      console.log("no items in list");
+    } else {
+      usersCart.map((cartItem) => {
+        db.collection("posts")
+          .doc(cartItem.id)
+          .get()
+          .then((doc) => {
+            // console.log(doc.data().sizes);
+            prices.push(Number(doc.data().price));
+          });
+      });
+    }
+
     for (let i = 0; i < prices.length; i++) {
       total += prices[i];
     }
+
+    console.log(total);
 
     return total;
   };
@@ -149,10 +148,16 @@ function Cart() {
   return (
     <div className="cart">
       <div className="cart__header">
-        <h1>Cart</h1>
-        <Link to="/home">
-          <Button>Home</Button>
+        <Link
+          to="/home"
+          className="cart__homeLink"
+          style={{ textDecoration: "none" }}
+        >
+          <Button style={{ fontSize: "25px", textDecoration: "none" }}>
+            Go Back
+          </Button>
         </Link>
+        <h1 className="cart__title">Cart</h1>
       </div>
       {paidFor ? (
         <div>
@@ -167,9 +172,26 @@ function Cart() {
                 <h3>Sorry</h3>
               </div>
             ) : (
-              usersCart.map((item) => <CartItem item={item} />)
+              // usersCart.map((item, index) => (
+              //   <CartItem key={index} item={item} />
+              // ))
+              <div>
+                <TestItem />
+                <TestItem />
+                <TestItem />
+                <TestItem />
+                <TestItem />
+                <TestItem />
+                <TestItem />
+                <TestItem />
+                <TestItem />
+              </div>
             )}
           </div>
+          <div className="cart__totalDiv">
+            <h2 className="cart__total">Total: ${total}</h2>
+          </div>
+          <hr></hr>
           <div className="cart__paypal" id="cart__paypal">
             <PayPalButton
               createOrder={(data, actions) => createOrder(data, actions)}
@@ -223,11 +245,27 @@ function CartItem({ item }) {
     <div className="cartItem">
       <img className="cartItem__img" src={imgUrl} alt="" />
 
-      <h2>{title}</h2>
-      <h3>$: {price}</h3>
-      <h3>Size: {item.size}</h3>
+      <h2 className="cartItem__title">{title}</h2>
+      <h3 className="cartItem__price">${price}</h3>
+      <h3 className="cartItem__size">Size: {item.size}</h3>
 
       <Button onClick={removeItem}>
+        <HighlightOffIcon style={{ fill: "red" }} />
+      </Button>
+    </div>
+  );
+}
+
+function TestItem() {
+  return (
+    <div className="cartItem">
+      <img className="cartItem__img" alt="" />
+
+      <h2 className="cartItem__title">oh yeah</h2>
+      <h3 className="cartItem__price">$34</h3>
+      <h3 className="cartItem__size">Size: timmy</h3>
+
+      <Button>
         <HighlightOffIcon style={{ fill: "red" }} />
       </Button>
     </div>

@@ -7,6 +7,7 @@ import "../styles/wishList.css";
 // material-ui
 import { Button } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 function WishList() {
   // variable for storing all users current wishlist items
@@ -40,10 +41,16 @@ function WishList() {
   return (
     <div className="wishList">
       <div className="wishList__header">
-        <h1>Wish List</h1>
-        <Link to="/home">
-          <Button>Home</Button>
+        <Link
+          to="/home"
+          className="wishList__homeLink"
+          style={{ fontSize: "25px", textDecoration: "none" }}
+        >
+          <Button style={{ fontSize: "25px", textDecoration: "none" }}>
+            Go Back
+          </Button>
         </Link>
+        <h1 className="wishList__title">Wish List</h1>
       </div>
       <div className="wishList__body">
         {check ? (
@@ -52,7 +59,16 @@ function WishList() {
             <h3>sorry</h3>
           </div>
         ) : (
-          usersWishList.map((item,index) => <WishListItem key={index} item={item} />)
+          // usersWishList.map((item,index) => <WishListItem key={index} item={item} />)
+          <div>
+            <TestItem />
+            <TestItem />
+            <TestItem />
+            <TestItem />
+            <TestItem />
+            <TestItem />
+            <TestItem />
+          </div>
         )}
       </div>
     </div>
@@ -114,6 +130,17 @@ function WishListItem({ item }) {
       );
   };
 
+  const removeItem = () => {
+    db.collection("WishList")
+      .doc(currentUser.uid)
+      .update({
+        cart: firebase.firestore.FieldValue.arrayRemove(item),
+      })
+      .then(() => {
+        setUpdater(updater + 1);
+      });
+  };
+
   return (
     <div className="wishListItem">
       <img className="wishListItem__img" src={imgUrl} alt="" />
@@ -122,6 +149,27 @@ function WishListItem({ item }) {
       <h3>$: {price}</h3>
       <h3>Size: {item.size}</h3>
       <Button onClick={addToCart}>
+        <ShoppingCartIcon />
+      </Button>
+      <Button onClick={removeItem}>
+        <HighlightOffIcon style={{ fill: "red" }} />
+      </Button>
+    </div>
+  );
+}
+
+function TestItem() {
+  return (
+    <div className="wishListItem">
+      <img className="wishListItem__img" alt="" />
+
+      <h2>Title</h2>
+      <h3>$: </h3>
+      <h3>Size: </h3>
+      <Button>
+        <HighlightOffIcon style={{ fill: "red" }} />
+      </Button>
+      <Button>
         <ShoppingCartIcon />
       </Button>
     </div>
