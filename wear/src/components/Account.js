@@ -62,30 +62,37 @@ function Account() {
           src={currentUser.photoURL}
           style={{ height: "120px", width: "120px" }}
         ></Avatar>
-        {/* users display name */}
+
         <div className="account__headerInfo">
-          <h1 className="account__userName">{currentUser.displayName}</h1>
-          {/* users dectiption */}
-          <h5>{description}</h5>
-          <Button>
-            <Link to="/editAccount">
-              <SettingsIcon />
-            </Link>
-          </Button>
-          <button
-            onClick={() => {
-              auth.signOut();
-              console.log("user signed out");
-            }}
-          >
-            Log out
-          </button>
+          <div className="account__headerInfoUser">
+            <h1 className="account__userName">{currentUser.displayName}</h1>
+
+            <Button
+              style={{ height: "40px", marginRight: "5px", marginLeft: "5px" }}
+            >
+              <Link to="/editAccount">
+                <SettingsIcon />
+              </Link>
+            </Button>
+            <button
+              className="account__logoutButton"
+              onClick={() => {
+                auth.signOut();
+                console.log("user signed out");
+              }}
+            >
+              Log out
+            </button>
+          </div>
+          <div className="account__userDescription">
+            <h5>{description}</h5>
+          </div>
         </div>
       </div>
       <hr></hr>
       <div className="account__posts">
-        {usersImg.map((imgData) => (
-          <UserImg data={imgData} />
+        {usersImg.map((imgData, index) => (
+          <UserImg key={index} data={imgData} />
         ))}
       </div>
     </div>

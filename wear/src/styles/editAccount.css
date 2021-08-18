@@ -5,8 +5,54 @@
 
   /* spacing */
   margin: 0 auto;
+  margin-top: 30px;
   text-align: center;
 
+  /* padding */
+  padding-top: 20px;
+
   /* color */
-  background-color: antiquewhite;
+  background-color: #f9f8f8;
+
+  /* drop Shadow */
+  box-shadow: 2px 9px 5px 0px #a8a8a8;
+
+  /* border Radius */
+  border-radius: 20px;
+}
+
+.editAccount__description {
+  background-color: rgba(128, 128, 128, 0);
+  border: none;
+}
+
+.editAccount__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.editAcount__IMGButton {
+  margin-top: 15px;
+}
+
+.editAcount__button {
+  margin: 0 auto;
+  margin-top: 70px;
+  margin-bottom: 60px;
+
+  width: 40%;
+  height: 50px;
+
+  border-radius: 40px;
+
+  font-size: 25px;
+
+  border: none;
+
+  color: #ffff;
+
+  background: #008080;
+
+  cursor: pointer;
 }

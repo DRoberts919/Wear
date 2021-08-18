@@ -27,7 +27,7 @@ function Post({
   const [suggestedItems, setSuggestedItems] = useState([]);
   const [itemArray, setItemArray] = useState(postList);
   const { currentUser } = useAuth();
-  const clickedOption = "post__sizeOption"
+  const clickedOption = "post__sizeOption";
 
   // useEffect to get 3 random posts as a suggested item
   useEffect(() => {
@@ -84,6 +84,9 @@ function Post({
     var wishItem = {
       id: postId,
       size: selectedSize,
+      price: price,
+      imageUrl: imageUrl,
+      title: title,
     };
 
     docRef.get().then((doc) => {
@@ -108,6 +111,9 @@ function Post({
     var cartItem = {
       id: postId,
       size: selectedSize,
+      price: price,
+      imageUrl: imageUrl,
+      title: title,
     };
 
     docRef.get().then((doc) => {
@@ -226,7 +232,11 @@ function Post({
           <div className="post__suggestedItemContainer">
             <p className="post__suggestedItemText">Suggested Items </p>
             {suggestedItems.map((item, index) => (
-              <a className="post__suggestedItemTag" key={index} href={"#" + item.id}>
+              <a
+                className="post__suggestedItemTag"
+                key={index}
+                href={"#" + item.id}
+              >
                 <img
                   alt=""
                   className="post__suggestedItemPicture"

@@ -12,7 +12,7 @@ import "../styles/userPost.css";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Description } from "@material-ui/icons";
+
 
 function UserPost() {
   const [caption, setCaption] = useState("");

@@ -7,6 +7,7 @@
 
   /* spacing */
   margin: 0 auto;
+  margin-top: 30px;
 
   /* color */
   background-color: #f9f8f8;
@@ -16,14 +17,46 @@
   display: flex;
   flex-direction: row;
 
-  padding-left: 15px;
+  padding-left: 60px;
   padding-top: 20px;
   padding-bottom: 20px;
 }
 
 .account__headerInfo {
+  display: flex;
+  flex-direction: column;
   margin-left: 50px;
 }
+
+.account__headerInfoUser {
+  display: flex;
+  flex-direction: row;
+}
+
+.account__userDescription {
+  /* margin-left: 30px; */
+  max-width: 455px;
+  max-height: 100px;
+  margin-top: 10px;
+}
+
+.account__logoutButton {
+  height: 40px;
+  border-radius: 10px;
+
+  border: 1px solid white;
+
+  cursor: pointer;
+
+  background-color: #e2ebe4;
+
+  user-select: none;
+}
+
+.account__logoutButton:hover {
+  border-color: #53dd6c;
+}
+
 /* apostContainer */
 
 .account__posts {
@@ -43,7 +76,7 @@
   min-height: 290px;
   max-width: 290px;
   max-height: 290px;
-  margin: 4px;
+  margin: 10px;
 }
 
 .userImg__soldItem {

@@ -17,29 +17,35 @@ function Cart() {
   const [total, setTotal] = useState();
   const [paidFor, setPaidFor] = useState(false);
   const [check, setCheck] = useState(false);
+  const [updater, setUpdater] = useState(1);
 
   //   useEffect to get all data from the users cart!
   useEffect(() => {
     getCartData();
-  }, [usersCart, paidFor]);
+  }, [updater, total]);
 
-  const getCartData = () => {
-    db.collection("ShoppingCart")
+  const getCartData = async () => {
+    await db
+      .collection("ShoppingCart")
       .doc(currentUser.uid)
       .get()
       .then((doc) => {
         if (doc.exists) {
           setUsersCart(doc.data().cart);
-          addPrices();
           setCheck(false);
         } else {
           setUsersCart("No data Exists for this user");
           setCheck(true);
         }
+      })
+      .then(() => {
+        addPrices();
       });
+
+    // addPrices();
   };
 
-  // fucntion to subtract from the the collections of sizes to simulate
+  // function to subtract from the the collections of sizes to simulate
   // an item being removed from the sellers stock
   const removeSizeItemCounter = () => {
     usersCart.forEach((item) => {
@@ -88,33 +94,30 @@ function Cart() {
   };
 
   // method to add all prices up
-  const addPrices = (prices) => {
-    // takes in an array of numbers and
-    var total = 0;
+  const addPrices = () => {
+    let price = 0;
 
-    var prices = [];
-
-    if (usersCart == null) {
-      console.log("no items in list");
-    } else {
-      usersCart.map((cartItem) => {
-        db.collection("posts")
-          .doc(cartItem.id)
-          .get()
-          .then((doc) => {
-            // console.log(doc.data().sizes);
-            prices.push(Number(doc.data().price));
-          });
+    if (usersCart.length !== 0) {
+      usersCart.forEach((item) => {
+        price += Number(item.price);
       });
+      setTotal(price);
+    } else {
+      setTotal(0);
     }
+  };
 
-    for (let i = 0; i < prices.length; i++) {
-      total += prices[i];
-    }
+  console.log(total);
 
-    console.log(total);
-
-    return total;
+  const removeItem = (item) => {
+    db.collection("ShoppingCart")
+      .doc(currentUser.uid)
+      .update({
+        cart: firebase.firestore.FieldValue.arrayRemove(item),
+      })
+      .then(() => {
+        setUpdater(updater + 1);
+      });
   };
 
   // here we create the paypal order and give it all its needed data
@@ -145,6 +148,7 @@ function Cart() {
     setPaidFor(true);
     console.log(order);
   };
+
   return (
     <div className="cart">
       <div className="cart__header">
@@ -172,20 +176,19 @@ function Cart() {
                 <h3>Sorry</h3>
               </div>
             ) : (
-              // usersCart.map((item, index) => (
-              //   <CartItem key={index} item={item} />
-              // ))
-              <div>
-                <TestItem />
-                <TestItem />
-                <TestItem />
-                <TestItem />
-                <TestItem />
-                <TestItem />
-                <TestItem />
-                <TestItem />
-                <TestItem />
-              </div>
+              usersCart.map((item, index) => (
+                <div className="cartItem" key={index}>
+                  <img className="cartItem__img" src={item.imageUrl} alt="" />
+
+                  <h2 className="cartItem__title">{item.title}</h2>
+                  <h3 className="cartItem__price">${item.price}</h3>
+                  <h3 className="cartItem__size">Size: {item.size}</h3>
+
+                  <Button onClick={() => removeItem(item)}>
+                    <HighlightOffIcon style={{ fill: "red" }} />
+                  </Button>
+                </div>
+              ))
             )}
           </div>
           <div className="cart__totalDiv">
@@ -193,10 +196,14 @@ function Cart() {
           </div>
           <hr></hr>
           <div className="cart__paypal" id="cart__paypal">
-            <PayPalButton
-              createOrder={(data, actions) => createOrder(data, actions)}
-              onApprove={(data, actions) => onApprove(data, actions)}
-            />
+            {usersCart.length == 0 ? (
+              <div></div>
+            ) : (
+              <PayPalButton
+                createOrder={(data, actions) => createOrder(data, actions)}
+                onApprove={(data, actions) => onApprove(data, actions)}
+              />
+            )}
           </div>
         </div>
       )}
@@ -205,69 +212,3 @@ function Cart() {
 }
 
 export default Cart;
-
-function CartItem({ item }) {
-  const [price, setPrice] = useState("");
-  const [imgUrl, setImgUrl] = useState("");
-  const [title, setTitle] = useState("");
-  const [postId, setPostId] = useState("");
-  const [updater, setUpdater] = useState(1);
-  const { currentUser } = useAuth();
-
-  //   useEffect to get each individual item
-  useEffect(() => {
-    const getItem = db
-      .collection("posts")
-      .doc(item.id)
-      .get()
-      .then((doc) => {
-        setPrice(doc.data().price);
-        setImgUrl(doc.data().imageUrl);
-        setTitle(doc.data().title);
-        setPostId(item.id);
-      });
-
-    return getItem;
-  }, [item, updater]);
-
-  const removeItem = () => {
-    db.collection("ShoppingCart")
-      .doc(currentUser.uid)
-      .update({
-        cart: firebase.firestore.FieldValue.arrayRemove(item),
-      })
-      .then(() => {
-        setUpdater(updater + 1);
-      });
-  };
-
-  return (
-    <div className="cartItem">
-      <img className="cartItem__img" src={imgUrl} alt="" />
-
-      <h2 className="cartItem__title">{title}</h2>
-      <h3 className="cartItem__price">${price}</h3>
-      <h3 className="cartItem__size">Size: {item.size}</h3>
-
-      <Button onClick={removeItem}>
-        <HighlightOffIcon style={{ fill: "red" }} />
-      </Button>
-    </div>
-  );
-}
-
-function TestItem() {
-  return (
-    <div className="cartItem">
-      <img className="cartItem__img" alt="" />
-
-      <h2 className="cartItem__title">oh yeah</h2>
-      <h3 className="cartItem__price">$34</h3>
-      <h3 className="cartItem__size">Size: timmy</h3>
-
-      <Button>
-        <HighlightOffIcon style={{ fill: "red" }} />
-      </Button>
-    </div>
-  );
-}

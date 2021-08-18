@@ -5,7 +5,8 @@ import "../styles/editAccount.css";
 import { useHistory } from "react-router";
 
 // maaterial-ui
-import { Button } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Input from "@material-ui/core/Input";
 
 function EditAccount() {
   const { currentUser } = useAuth();
@@ -24,7 +25,11 @@ function EditAccount() {
     evt.preventDefault();
 
     try {
-      if (userName !== "" && userImg !== null && description !== "") {
+      if (
+        userName !== currentUser.displayName &&
+        userImg !== null &&
+        description !== ""
+      ) {
         // if user chooses to update all data
         updateAllData();
       } else if (userImg == null && description === "") {
@@ -264,10 +269,10 @@ function EditAccount() {
   };
   return (
     <div className="editAccount">
-      <h1>Here you can edit your account</h1>
-      <form onSubmit={updateProfile}>
+      <h1>Edit Account</h1>
+      <form className="editAccount__form" onSubmit={updateProfile}>
         <h3>username</h3>
-        <input
+        <Input
           type="text"
           // value={currentUser.displayName}
           placeholder={currentUser.displayName}
@@ -279,15 +284,18 @@ function EditAccount() {
           type="text"
           cols="40"
           rows="5"
-          className="userPost__captionInput"
+          placeholder="type your new description here"
+          className="editAccount__description"
           value={description}
           onChange={(event) => setDescription(event.target.value)}
         />
 
-        <h3>Profile Image</h3>
-        <input type="file" onChange={setImage}></input>
+        <h3 style={{ marginTop: "20px", marginBotom: "15px" }}>
+          Profile Image
+        </h3>
+        <input className="editAcount__IMGButton" type="file" onChange={setImage}></input>
 
-        <Button type="submit">Submit</Button>
+        <button className="editAcount__button" type="submit">Submit</button>
       </form>
     </div>
   );

@@ -18,6 +18,12 @@ function Home() {
   // post array that will store all posts to be used on the home page
   const [posts, setPosts] = useState([]);
 
+  // useEffect to get all posts
+  useEffect(() => {
+    // access my posts database
+    return getPosts();
+  }, [posts]);
+
   const getPosts = async () => {
     await db
       .collection("posts")
@@ -29,12 +35,6 @@ function Home() {
         );
       });
   };
-
-  // useEffect to get all posts
-  useEffect(() => {
-    // access my posts database
-    return getPosts();
-  }, [posts]);
 
   return (
     <div className="landing">
@@ -81,9 +81,10 @@ function UserNav() {
         <Avatar
           src={currentUser.photoURL}
           alt={currentUser.displayName}
-          sizes="large"
+          sizes="larger"
+          style={{ marginLeft: "15px", marginTop: "10px",height: "60px", width: "60px" }}
         />
-        <h1>{currentUser.displayName}</h1>
+        <h1 className="userNav__username">{currentUser.displayName}</h1>
       </div>
 
       <hr />
