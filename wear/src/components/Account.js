@@ -83,6 +83,9 @@ function Account() {
             >
               Log out
             </button>
+            <Link to="/home">
+              <button className="account__logoutButton">Home</button>
+            </Link>
           </div>
           <div className="account__userDescription">
             <h5>{description}</h5>

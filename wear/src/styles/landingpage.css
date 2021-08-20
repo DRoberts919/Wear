@@ -1,6 +1,116 @@
 .landingPage {
-  margin-top: 500px;
+  width: 100%;
+  height: auto;
+}
+
+.landingPage__welcome {
+  width: 100%;
+  height: 250px;
+
+  background-image: url("../images//storeFactory.png");
+  background-repeat: no-repeat;
+  object-fit: cover;
+
+  /* margin-top: 10px; */
+  padding-top: 100px;
+  padding-bottom: 40px;
+  padding-left: 100px;
+
+  display: flex;
+  flex-direction: row;
+
+  /* align-items: center; */
+  text-align: center;
+  
+
+  color: white;
+
+  background-color: #f9f8f8;
+
+  box-shadow: 2px 9px 5px 0px #dbd9d6;
+}
+
+.welcomeText {
+  font-size: 50px;
+}
+
+.landingPage__logo {
+  width: 223px;
+  height: 225px;
+}
+
+.wear {
+  display: inherit;
+  flex-direction: row;
+
+  margin-left: 50px;
+}
+
+.wear h2 {
+  font-size: 125px;
+
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-style: italic;
+
+  padding-top: 20px;
+}
+
+.landingPage__intro {
+  width: 100%;
+  height: 350px;
+
+  padding-top: 15px;
+
+  text-align: center;
+}
+
+.landingPage__intro p {
+  background-color: #dbd9d6;
+  margin: 0 auto;
+
+  width: 900px;
+  height: 80%;
+
+  border-radius: 20px;
+
+  font-size: 20px;
+  font-stretch: narrower;
+  font-size-adjust: initial;
+}
+
+.landingPage__haveAcount {
+  width: 100%;
+  height: 350px;
+  padding-top: 30px;
+  background-color: #f9f8f8;
+}
+
+.flexer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.textSetter {
+  text-align: center;
+  align-items: center;
+
   width: 500px;
-  height: 200px;
-  background-color: aqua;
+  height: 75%;
+
+  margin-top: 20px;
+
+  border-radius: 15px;
+
+  background-color: #def0e2;
+  transition: all 0.2s ease-in-out;
+}
+
+.textSetter h2 {
+  margin-top: 80px;
+}
+
+.textSetter:hover {
+  transform: scale(1.1);
+  box-shadow: 2px 9px 5px 0px #dbd9d6;
 }

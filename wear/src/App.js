@@ -1,11 +1,9 @@
 import "./styles/App.css";
 import logo from "./images/w-logo.png";
-import { useState } from "react";
+
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
-import { Button } from "@material-ui/core";
 import { useAuth } from "./context/AuthContext";
-import { auth, db } from "./firebase";
 
 // components
 import Signup from "./components/Signup";
@@ -20,6 +18,7 @@ import EditAccount from "./components/EditAccount";
 import LandingPage from "./components/LandingPage";
 import SearchedUser from "./components/SearchedUser";
 import Searchbar from "./components/Searchbar";
+import Avatar from "@material-ui/core/Avatar";
 
 // helper fucntions
 
@@ -34,26 +33,33 @@ function App() {
             <Link to="/">
               <img alt="" className="app__logo" src={logo} />
             </Link>
-            <p className="app__EAR">EAR</p>
+            {/* <p className="app__EAR">EAR</p> */}
           </div>
           {currentUser ? (
             <div className="app__headerButtons">
               <Searchbar />
-
-              <Link to="/home">
-                <Button>Home</Button>
-              </Link>
-              <Link to="/account">
-                <Button>account</Button>
-              </Link>
+              <div className="app__userHeader">
+                <Avatar
+                  src={currentUser.photoURL}
+                  alt={currentUser.displayName}
+                  sizes="large"
+                  style={{
+                    marginLeft: "15px",
+                    marginTop: "10px",
+                    height: "50px",
+                    width: "50px",
+                  }}
+                />
+                <h2 className="userNav__username">{currentUser.displayName}</h2>
+              </div>
             </div>
           ) : (
             <div className="app__authButtons">
               <Link to="/login">
-                <button className="app__loginButton">Login</button>
+                <button className="app__Button">Login</button>
               </Link>
               <Link to="/signup">
-                <button className="app__singupButton">Signup</button>
+                <button className="app__Button">Signup</button>
               </Link>
             </div>
           )}

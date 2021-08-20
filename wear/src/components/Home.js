@@ -78,16 +78,21 @@ function UserNav() {
   return (
     <div className="UserNav">
       <div className="userNav__header">
-        <Avatar
+        {/* <Avatar
           src={currentUser.photoURL}
           alt={currentUser.displayName}
           sizes="larger"
-          style={{ marginLeft: "15px", marginTop: "10px",height: "60px", width: "60px" }}
+          style={{
+            marginLeft: "15px",
+            marginTop: "10px",
+            height: "60px",
+            width: "60px",
+          }}
         />
-        <h1 className="userNav__username">{currentUser.displayName}</h1>
+        <h1 className="userNav__username">{currentUser.displayName}</h1> */}
       </div>
 
-      <hr />
+      
 
       <div className="userNav__buttonContainer">
         <Link className="link userNav__button" to={`/account`}>

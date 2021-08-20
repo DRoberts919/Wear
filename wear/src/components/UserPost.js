@@ -13,7 +13,6 @@ import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
 
-
 function UserPost() {
   const [caption, setCaption] = useState("");
   const [style, setStyle] = useState("");
