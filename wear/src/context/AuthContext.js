@@ -12,14 +12,12 @@ export function useAuth() {
 // setting my auth Provider so i can share user data across whole project
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
-  const [userid, setuserId] = useState();
 
   // function to sign up a user taking in a few params.
   function signUp(email, password, username) {
     return auth
       .createUserWithEmailAndPassword(email, password)
       .then((authuser) => {
-        setuserId(authuser.user.id);
         db.collection("userCollection").add({
           uid: authuser.user.uid,
           description: "Welcome to my account!",

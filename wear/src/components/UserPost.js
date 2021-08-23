@@ -40,7 +40,6 @@ function UserPost() {
     "Flanel",
     "Button Up",
     "Pants",
-    ,
     "Jeans",
     "Slacks",
     "Dress pants",
@@ -227,12 +226,11 @@ function UserPost() {
               placeholder="Title"
             />
             <Input
-              className="userPost__Description"
+              className="userPost__captionInput"
               type="text"
               cols="40"
               rows="5"
               multiline
-              className="userPost__captionInput"
               value={caption}
               placeholder="caption"
               onChange={(event) => setCaption(event.target.value)}
@@ -323,7 +321,7 @@ function UserPost() {
         </div>
         <hr style={{ height: "600px", marginTop: "15px" }}></hr>
         <div className="userPost__tempBox">
-          <img src={tempFile} className="userPost__displayImg" />
+          <img src={tempFile} className="userPost__displayImg" alt="tempIMG" />
           <div className="userPost__tempData">
             <h4 className="userPost__temptitle">{title}</h4>
             <h5 className="userPost__tempdescription">{caption}</h5>

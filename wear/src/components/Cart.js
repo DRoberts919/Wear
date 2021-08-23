@@ -196,7 +196,7 @@ function Cart() {
           </div>
           <hr></hr>
           <div className="cart__paypal" id="cart__paypal">
-            {usersCart.length == 0 ? (
+            {usersCart.length === 0 ? (
               <div></div>
             ) : (
               <PayPalButton

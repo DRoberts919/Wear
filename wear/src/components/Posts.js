@@ -9,7 +9,6 @@ import "../styles/posts.css";
 import Button from "@material-ui/core/Button";
 import StarIcon from "@material-ui/icons/Star";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import SubdirectoryArrowLeftIcon from "@material-ui/icons/SubdirectoryArrowLeft";
 
 function Post({
   index,
@@ -35,7 +34,7 @@ function Post({
     let max = itemArray.length;
 
     itemArray.forEach((item) => {
-      if (item.post.isSold == true) {
+      if (item.post.isSold === true) {
         itemArray.pop(item);
       }
     });

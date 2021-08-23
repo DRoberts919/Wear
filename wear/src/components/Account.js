@@ -19,6 +19,8 @@ import SettingsIcon from "@material-ui/icons/Settings";
 function Account() {
   const { currentUser } = useAuth();
   const [description, setDescription] = useState("");
+  const [userAvatar, setUserAvatar] = useState(null);
+  const [username, setUsername] = useState("");
   const [usersImg, setUsersImg] = useState([]);
 
   // useEffect to get the users description
@@ -32,6 +34,8 @@ function Account() {
         queryData.forEach((doc) => {
           if (doc.data().uid === currentUser.uid) {
             setDescription(doc.data().description);
+            setUserAvatar(doc.data().userImage);
+            setUsername(doc.data().username);
           }
         });
       });
@@ -48,7 +52,7 @@ function Account() {
         setUsersImg(postList);
       });
 
-    return getDescription, getPosts;
+    return { getDescription, getPosts };
   }, [currentUser]);
 
   return (
@@ -59,13 +63,13 @@ function Account() {
         {/* users image */}
         <Avatar
           alt="currentUser"
-          src={currentUser.photoURL}
+          src={userAvatar}
           style={{ height: "120px", width: "120px" }}
         ></Avatar>
 
         <div className="account__headerInfo">
           <div className="account__headerInfoUser">
-            <h1 className="account__userName">{currentUser.displayName}</h1>
+            <h1 className="account__userName">{username}</h1>
 
             <Button
               style={{ height: "40px", marginRight: "5px", marginLeft: "5px" }}
@@ -111,8 +115,9 @@ function UserImg({ data }) {
         src={soldItem}
         style={data.itemSold ? { display: "block" } : { display: "none" }}
         className="userImg__soldItem"
+        alt=""
       />
-      <img className="userImg__image" src={data.imageUrl} />
+      <img className="userImg__image" src={data.imageUrl} alt="" />
     </div>
   );
 }

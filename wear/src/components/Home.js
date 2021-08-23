@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import "../styles/home.css";
 import Post from "../components/Posts";
-import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import { db } from "../firebase";
 
@@ -12,7 +11,6 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import StarIcon from "@material-ui/icons/Star";
 import PersonIcon from "@material-ui/icons/Person";
 import AddIcon from "@material-ui/icons/Add";
-import Avatar from "@material-ui/core/Avatar";
 
 function Home() {
   // post array that will store all posts to be used on the home page
@@ -40,7 +38,7 @@ function Home() {
     <div className="landing">
       <div className="home__posts">
         {posts.map(({ id, post }, index) => {
-          if (post.itemSold == true) {
+          if (post.itemSold === true) {
             posts.pop(post);
           } else {
             return (
@@ -72,28 +70,8 @@ function Home() {
 export default Home;
 
 function UserNav() {
-  // get the current user
-  const { currentUser } = useAuth();
-
   return (
     <div className="UserNav">
-      <div className="userNav__header">
-        {/* <Avatar
-          src={currentUser.photoURL}
-          alt={currentUser.displayName}
-          sizes="larger"
-          style={{
-            marginLeft: "15px",
-            marginTop: "10px",
-            height: "60px",
-            width: "60px",
-          }}
-        />
-        <h1 className="userNav__username">{currentUser.displayName}</h1> */}
-      </div>
-
-      
-
       <div className="userNav__buttonContainer">
         <Link className="link userNav__button" to={`/account`}>
           <div className="userNav__button userNav__myAcount">

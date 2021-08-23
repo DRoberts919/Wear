@@ -39,6 +39,7 @@ function App() {
             <div className="app__headerButtons">
               <Searchbar />
               <div className="app__userHeader">
+               
                 <Avatar
                   src={currentUser.photoURL}
                   alt={currentUser.displayName}

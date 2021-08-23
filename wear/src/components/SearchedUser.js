@@ -1,4 +1,3 @@
-import { DesktopAccessDisabledTwoTone } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase";
@@ -118,8 +117,9 @@ function UserImg({ data }) {
         src={soldItem}
         style={data.itemSold ? { display: "block" } : { display: "none" }}
         className="userImg__soldItem"
+        alt="userImg"
       />
-      <img className="userImg__image" src={data.imageUrl} />
+      <img className="userImg__image" alt="" src={data.imageUrl} />
     </div>
   );
 }

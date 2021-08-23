@@ -60,7 +60,7 @@ function Searchbar() {
         </Button>
       </Link>
 
-      {results.length == 0 ? (
+      {results.length === 0 ? (
         <div></div>
       ) : (
         <div className="searchBar__searchedUsers">

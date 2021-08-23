@@ -3,7 +3,6 @@ import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import logo from "../images/w-logo.png";
 
-
 import "../styles/landingpage.css";
 
 function LandingPage() {
@@ -21,7 +20,7 @@ function LandingPage() {
       <div className="landingPage__welcome">
         <h3 className="welcomeText">WELCOME to </h3>
         <div className="wear">
-          <img className="landingPage__logo" src={logo} />
+          <img className="landingPage__logo" alt="logo" src={logo} />
           <h2>EAR</h2>
         </div>
       </div>
