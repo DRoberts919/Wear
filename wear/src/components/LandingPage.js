@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import logo from "../images/w-logo.png";
 
+
 import "../styles/landingpage.css";
 
 function LandingPage() {
@@ -25,10 +26,15 @@ function LandingPage() {
         </div>
       </div>
       <div className="landingPage__intro">
-        <p  style={{ margin: "0 auto" }}>
-          Welcome to WEAR! we are so happy you are here visitng our site. Our
-          goal and mission is to give you the small compnay a chance at selling
-          your clothing faster and simpler.
+        <p style={{ margin: "0 auto" }}>
+          Welcome to WEAR! we are so happy you are here visitng our site.
+          <br /> Our goal and mission is to give you as the small compnay a
+          chance at selling your clothing faster and simpler.
+          <br />
+          <br />
+          Go create an account and work with us to bring your company to life
+          and bring your <br />
+          product to the world!
         </p>
       </div>
       <div className="landingPage__haveAcount flexer">

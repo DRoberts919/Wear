@@ -33,7 +33,7 @@ function App() {
             <Link to="/">
               <img alt="" className="app__logo" src={logo} />
             </Link>
-            {/* <p className="app__EAR">EAR</p> */}
+            <h2 className="app__EAR">EAR</h2>
           </div>
           {currentUser ? (
             <div className="app__headerButtons">
