@@ -39,7 +39,6 @@ function App() {
             <div className="app__headerButtons">
               <Searchbar />
               <div className="app__userHeader">
-               
                 <Avatar
                   src={currentUser.photoURL}
                   alt={currentUser.displayName}
@@ -51,7 +50,7 @@ function App() {
                     width: "50px",
                   }}
                 />
-                <h2 className="userNav__username">{currentUser.displayName}</h2>
+                <h5 className="userNav__username">{currentUser.displayName}</h5>
               </div>
             </div>
           ) : (

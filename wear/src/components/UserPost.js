@@ -34,6 +34,7 @@ function UserPost() {
 
   // data for the drop downs
   const styles = [
+    "T-Shirt",
     "Long Sleeve",
     "Sweater",
     "Crewneck",
@@ -59,6 +60,10 @@ function UserPost() {
     "Blue",
     "Purple",
     "Pink",
+    "Tan",
+    "Cream",
+    "Off White",
+    "Mustard",
   ];
 
   //   use effect to setUser data for each post.

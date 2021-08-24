@@ -40,8 +40,6 @@ function Searchbar() {
       });
   }, [searchedUser]);
 
-  console.log(results.length);
-  console.log(userResults);
 
   return (
     <div className="searchBar">

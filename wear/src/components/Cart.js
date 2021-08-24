@@ -31,11 +31,14 @@ function Cart() {
       .get()
       .then((doc) => {
         if (doc.exists) {
+          console.log("data Exitsts");
           setUsersCart(doc.data().cart);
           setCheck(false);
         } else {
-          setUsersCart("No data Exists for this user");
+          console.log("data doesnt Exitsts");
+
           setCheck(true);
+          setUsersCart([]);
         }
       })
       .then(() => {

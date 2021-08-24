@@ -5,14 +5,13 @@ import { db } from "../firebase";
 import { Link } from "react-router-dom";
 
 import { Avatar } from "@material-ui/core";
-import { Button } from "@material-ui/core";
+
 
 import soldItem from "../images/soldItem.png";
 
 function SearchedUser() {
   const [userPhoto, setUserPhoto] = useState();
-  const [userId, setUserId] = useState();
-  const [check, setCheck] = useState(false);
+  const [userId, setUserId] = useState(null);
   const [description, setDescription] = useState("");
   const [username, setUsername] = useState("");
   const [checkUser, setCheckUser] = useState(false);
@@ -21,8 +20,9 @@ function SearchedUser() {
 
   let { id } = useParams();
 
-  const getUserData = async () => {
-    await db
+  useEffect(() => {
+    let posts = [];
+    var getUserData = db
       .collection("userCollection")
       .where("username", "==", id)
       .get()
@@ -40,38 +40,20 @@ function SearchedUser() {
           }
         });
       });
-  };
 
-  const getUserPosts = async () => {
-    let posts = [];
-    try {
-      await db
-        .collection("posts")
-        .where("userId", "==", userId)
-        .get()
-        .then((docdata) => {
-          docdata.forEach((item) => {
-            if (item.exists) {
-              console.log("user exists");
-              posts.push(item.data());
-              setCheck(true);
-            } else {
-              console.log("no items");
-
-              setCheck(false);
-            }
-          });
-          setUserPosts(posts);
+    var getPosts = db
+      .collection("posts")
+      .where("userId", "==", userId)
+      .get()
+      .then((docdata) => {
+        docdata.forEach((item) => {
+          posts.push(item.data());
         });
-    } catch (error) {
-      console.log("user has no post ");
-    }
-  };
+        setUserPosts(posts);
+      });
 
-  useEffect(() => {
-    getUserData();
-    getUserPosts();
-  }, [id]);
+    return { getUserData, getPosts };
+  }, [id, checkUser]);
 
   return (
     <div className="account">
@@ -79,18 +61,27 @@ function SearchedUser() {
         <>
           <div className="account__header">
             {/* users image */}
-            <Avatar alt="currentUser" src={userPhoto}></Avatar>
-            {/* users display name */}
-            <h1 className="account__userName">{username}</h1>
-            {/* users dectiption */}
-            <h5>{description}</h5>
-            <Link to="/home">
-              <Button>Home</Button>
-            </Link>
+            <Avatar
+              alt="currentUser"
+              src={userPhoto}
+              style={{ height: "120px", width: "120px" }}
+            ></Avatar>
+
+            <div className="account__headerInfo">
+              <div className="account__headerInfoUser">
+                <h1 className="account__userName">{username}</h1>
+                <Link to="/home">
+                  <button className="account__logoutButton">Home</button>
+                </Link>
+              </div>
+              <div className="account__userDescription">
+                <h5>{description}</h5>
+              </div>
+            </div>
           </div>
           <hr></hr>
           <div className="account__posts">
-            {check ? (
+            {!checkUser ? (
               <h1>no posts</h1>
             ) : (
               userPost.map((imgData, index) => (
@@ -102,8 +93,6 @@ function SearchedUser() {
       ) : (
         <h1>User does not exist</h1>
       )}
-      {/* user header 
-              the user header has a description, avatar icon, and name! */}
     </div>
   );
 }
